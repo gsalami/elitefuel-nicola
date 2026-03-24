@@ -184,6 +184,77 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
 .footer-col a:hover{color:var(--gold)}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:36px;font-size:11px;color:rgba(136,136,136,.5);letter-spacing:.1em}
 
+/* MEMBER PROGRAM */
+.member-section{padding:140px 60px;background:linear-gradient(180deg,var(--deep) 0%,var(--black) 100%);border-top:1px solid var(--border-rose)}
+.member-inner{max-width:1200px;margin:0 auto}
+.member-intro{text-align:center;margin-bottom:80px}
+.member-sub{font-size:14px;color:var(--gray);margin-top:16px;letter-spacing:.06em}
+.member-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;position:relative}
+.tier{background:var(--card);border:1px solid var(--border-rose);padding:52px 36px;display:flex;flex-direction:column;position:relative;transition:all .4s}
+.tier:hover{border-color:rgba(212,160,176,.4);transform:translateY(-4px)}
+.featured-tier{border-color:var(--rose)!important;background:linear-gradient(180deg,rgba(212,160,176,.06),var(--card))}
+.tier-badge-top{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--rose),var(--gold));color:var(--black);font-size:9px;letter-spacing:.2em;padding:6px 20px;white-space:nowrap;font-weight:500}
+.tier-top{text-align:center;margin-bottom:40px;padding-top:16px}
+.tier-icon{font-size:40px;display:block;margin-bottom:20px}
+.tier-name{font-family:var(--serif);font-size:32px;font-weight:300;color:var(--cream);margin-bottom:12px}
+.tier-price{font-family:var(--serif);font-size:28px;color:var(--gold)}
+.tier-price span{font-size:13px;color:var(--gray);font-family:var(--sans)}
+.tier-perks{list-style:none;flex:1;margin-bottom:40px}
+.tier-perks li{font-size:13px;color:var(--gray);padding:12px 0;border-bottom:1px solid var(--border-rose);line-height:1.6}
+.tier-perks li:last-child{border-bottom:none}
+.tier-btn{width:100%;text-align:center}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:block}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.96);width:440px;max-width:90vw;background:var(--deep);border:1px solid var(--border-rose);padding:52px;z-index:301;opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.4,0,.2,1)}
+.modal.open{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:all}
+.modal-close{position:absolute;top:20px;right:20px;background:none;border:none;color:var(--gray);cursor:pointer;font-size:18px}
+.modal-close:hover{color:var(--rose)}
+.modal h3{font-family:var(--serif);font-size:32px;font-weight:300;color:var(--cream);margin-top:16px}
+
+/* BLOG */
+.blog-section{padding:140px 60px;background:var(--black);border-top:1px solid var(--border-rose)}
+.blog-inner{max-width:1200px;margin:0 auto}
+.blog-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.blog-card{position:relative;overflow:hidden;cursor:pointer}
+.blog-card img{width:100%;height:420px;object-fit:cover;filter:brightness(.7);transition:.5s}
+.blog-card:hover img{filter:brightness(.85);transform:scale(1.03)}
+.blog-card-body{position:absolute;bottom:0;left:0;right:0;padding:40px 36px;background:linear-gradient(transparent,rgba(0,0,0,.85))}
+.blog-tag{font-size:9px;letter-spacing:.25em;color:var(--rose);text-transform:uppercase;border:1px solid var(--border-rose);padding:4px 12px;display:inline-block;margin-bottom:16px}
+.blog-card-body h3{font-family:var(--serif);font-size:26px;font-weight:300;color:var(--cream);line-height:1.3;margin-bottom:12px}
+.blog-card-body p{font-size:13px;color:rgba(245,240,232,.7);line-height:1.7;margin-bottom:20px}
+.blog-read{font-size:11px;letter-spacing:.2em;color:var(--rose-light);text-decoration:none;text-transform:uppercase}
+.blog-read:hover{color:var(--cream)}
+.blog-side{display:flex;flex-direction:column;gap:3px}
+.blog-card-small{display:flex;overflow:hidden;cursor:pointer;background:var(--card);border:1px solid var(--border-rose);transition:.3s}
+.blog-card-small:hover{border-color:rgba(212,160,176,.4)}
+.blog-card-small img{width:120px;height:120px;object-fit:cover;flex-shrink:0;filter:brightness(.8);transition:.4s}
+.blog-card-small:hover img{filter:brightness(.95)}
+.blog-card-small-body{padding:20px 24px;display:flex;flex-direction:column;justify-content:space-between}
+.blog-card-small-body h4{font-family:var(--serif);font-size:17px;font-weight:400;color:var(--cream);line-height:1.3;margin:8px 0 12px}
+
+/* INSTAGRAM */
+.insta-section{padding:100px 60px;border-top:1px solid var(--border-rose);background:var(--deep)}
+.insta-inner{max-width:1200px;margin:0 auto}
+.insta-header{text-align:center;margin-bottom:52px}
+.insta-handle{font-family:var(--serif);font-size:clamp(36px,5vw,60px);font-weight:300;background:linear-gradient(135deg,var(--rose-light),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
+.insta-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
+.insta-item{position:relative;overflow:hidden;aspect-ratio:1}
+.insta-item img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%) brightness(.8);transition:.5s}
+.insta-item:hover img{filter:grayscale(0%) brightness(.95);transform:scale(1.06)}
+.insta-overlay{position:absolute;inset:0;background:rgba(212,160,176,.15);display:flex;align-items:center;justify-content:center;font-size:24px;opacity:0;transition:.3s}
+.insta-item:hover .insta-overlay{opacity:1}
+
+@media(max-width:768px){
+  .member-section,.blog-section,.insta-section{padding:60px 20px}
+  .member-tiers{grid-template-columns:1fr;gap:3px}
+  .featured-tier{order:-1}
+  .blog-grid{grid-template-columns:1fr}
+  .blog-card img{height:300px}
+  .insta-grid{grid-template-columns:repeat(3,1fr)}
+}
+
 /* CHATBOT */
 .chatbot-btn{position:fixed;bottom:90px;right:28px;z-index:150;background:linear-gradient(135deg,var(--rose),var(--gold));border:none;border-radius:50px;padding:14px 20px;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 8px 32px rgba(212,160,176,.3);transition:all .3s}
 .chatbot-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(212,160,176,.4)}
@@ -333,7 +404,8 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
     <a href="#products">Collection</a>
     <a href="#bundle">Bundles</a>
     <a href="#yoga">Studio</a>
-    <a href="#philosophy">Maison</a>
+    <a href="#member">Circle</a>
+    <a href="#blog">Journal</a>
   </div>
   <a href="#" class="logo">ÉLITE FUEL</a>
   <div style="display:flex;align-items:center;gap:16px">
@@ -526,6 +598,166 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
   </div>
 </section>
 
+<!-- MEMBER PROGRAM -->
+<section class="member-section" id="member">
+  <div class="member-inner">
+    <div class="member-intro">
+      <p class="section-tag">Le Club Privé</p>
+      <h2>ÉLITE <em>Circle</em></h2>
+      <p class="member-sub">Drei Stufen. Ein Leben auf höchstem Niveau.</p>
+    </div>
+    <div class="member-tiers">
+      <div class="tier tier-silver">
+        <div class="tier-top">
+          <span class="tier-icon">🤍</span>
+          <h3 class="tier-name">Silver</h3>
+          <p class="tier-price">Kostenlos</p>
+        </div>
+        <ul class="tier-perks">
+          <li>✦ Frühzugang zu Neuheiten</li>
+          <li>✦ Monatlicher Newsletter</li>
+          <li>✦ 5% Rabatt auf alle Bestellungen</li>
+          <li>✦ Zugang zum Blog</li>
+        </ul>
+        <button class="btn btn-outline tier-btn" onclick="openMember('Silver')">Jetzt beitreten</button>
+      </div>
+      <div class="tier tier-gold featured-tier">
+        <div class="tier-badge-top">BELIEBTESTE WAHL</div>
+        <div class="tier-top">
+          <span class="tier-icon">🌸</span>
+          <h3 class="tier-name">Gold</h3>
+          <p class="tier-price">CHF 19.—<span>/Monat</span></p>
+        </div>
+        <ul class="tier-perks">
+          <li>✦ Alles aus Silver</li>
+          <li>✦ 15% Rabatt auf alle Produkte</li>
+          <li>✦ 1 Yoga-Kurs gratis pro Monat</li>
+          <li>✦ Persönliche Ernährungsberatung</li>
+          <li>✦ Private Community-Zugang</li>
+        </ul>
+        <button class="btn btn-primary tier-btn" onclick="openMember('Gold')">Gold werden</button>
+      </div>
+      <div class="tier tier-platinum">
+        <div class="tier-top">
+          <span class="tier-icon">✨</span>
+          <h3 class="tier-name">Platinum</h3>
+          <p class="tier-price">CHF 49.—<span>/Monat</span></p>
+        </div>
+        <ul class="tier-perks">
+          <li>✦ Alles aus Gold</li>
+          <li>✦ 25% Rabatt auf alle Produkte</li>
+          <li>✦ Unbegrenzte Yoga-Kurse</li>
+          <li>✦ Monatliche Überraschungsbox</li>
+          <li>✦ VIP-Einladungen zu Events</li>
+          <li>✦ Direktlinie zu Nina (Chat-Priorität)</li>
+        </ul>
+        <button class="btn btn-outline tier-btn" onclick="openMember('Platinum')">Platinum anfragen</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBER MODAL -->
+<div class="modal-overlay" id="member-modal-overlay" onclick="closeMemberModal()"></div>
+<div class="modal" id="member-modal">
+  <button class="modal-close" onclick="closeMemberModal()">✕</button>
+  <p class="section-tag">Le Club Privé</p>
+  <h3 id="modal-title">Mitglied werden</h3>
+  <p id="modal-desc" style="font-size:13px;color:var(--gray);line-height:1.8;margin:16px 0 28px"></p>
+  <form onsubmit="submitMember(event)">
+    <input class="newsletter-input" type="text" placeholder="Dein Name" required style="width:100%;margin-bottom:12px;border-right:1px solid var(--border-rose)"/>
+    <input class="newsletter-input" type="email" id="modal-email" placeholder="Deine E-Mail" required style="width:100%;margin-bottom:24px;border-right:1px solid var(--border-rose)"/>
+    <button class="btn btn-primary" style="width:100%;text-align:center" type="submit">Bestätigen & beitreten</button>
+  </form>
+</div>
+
+<!-- BLOG -->
+<section class="blog-section" id="blog">
+  <div class="blog-inner">
+    <div class="section-intro" style="margin-bottom:60px">
+      <p class="section-tag">Le Journal</p>
+      <h2>Wellness Stories</h2>
+    </div>
+    <div class="blog-grid">
+      <article class="blog-card blog-card-featured">
+        <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900&q=80&fit=crop" alt="Nutrition" loading="lazy"/>
+        <div class="blog-card-body">
+          <span class="blog-tag">Ernährung</span>
+          <h3>Morgenritual: Wie du deinen Tag mit Intention beginnst</h3>
+          <p>Erfahre, wie drei einfache Gewohnheiten — Protein, Bewegung und Stille — deine Energie für den ganzen Tag transformieren.</p>
+          <a href="#" class="blog-read">Lesen →</a>
+        </div>
+      </article>
+      <div class="blog-side">
+        <article class="blog-card-small">
+          <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&q=80&fit=crop" alt="Yoga"/>
+          <div class="blog-card-small-body">
+            <span class="blog-tag">Yoga</span>
+            <h4>Yin Yoga: Die Kraft der Stille</h4>
+            <a href="#" class="blog-read">Lesen →</a>
+          </div>
+        </article>
+        <article class="blog-card-small">
+          <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80&fit=crop" alt="Clean eating"/>
+          <div class="blog-card-small-body">
+            <span class="blog-tag">Clean Eating</span>
+            <h4>Warum Proteinqualität wichtiger ist als Menge</h4>
+            <a href="#" class="blog-read">Lesen →</a>
+          </div>
+        </article>
+        <article class="blog-card-small">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80&fit=crop" alt="Wellness"/>
+          <div class="blog-card-small-body">
+            <span class="blog-tag">Wellness</span>
+            <h4>Omega 3: Das stille Wunder für Haut und Geist</h4>
+            <a href="#" class="blog-read">Lesen →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="insta-section">
+  <div class="insta-inner">
+    <div class="insta-header">
+      <p class="section-tag">Folge uns</p>
+      <h2><a href="https://www.instagram.com/elitefuel.ch" target="_blank" class="insta-handle">@elitefuel.ch</a></h2>
+      <p style="font-size:13px;color:var(--gray);margin-top:12px">Täglich Inspiration · Rezepte · Behind the Scenes</p>
+    </div>
+    <div class="insta-grid">
+      <a href="https://www.instagram.com/elitefuel.ch" target="_blank" class="insta-item">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80&fit=crop" alt="Instagram 1"/>
+        <div class="insta-overlay">📷</div>
+      </a>
+      <a href="https://www.instagram.com/elitefuel.ch" target="_blank" class="insta-item">
+        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&q=80&fit=crop" alt="Instagram 2"/>
+        <div class="insta-overlay">📷</div>
+      </a>
+      <a href="https://www.instagram.com/elitefuel.ch" target="_blank" class="insta-item">
+        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&q=80&fit=crop" alt="Instagram 3"/>
+        <div class="insta-overlay">📷</div>
+      </a>
+      <a href="https://www.instagram.com/elitefuel.ch" target="_blank" class="insta-item">
+        <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=400&q=80&fit=crop" alt="Instagram 4"/>
+        <div class="insta-overlay">📷</div>
+      </a>
+      <a href="https://www.instagram.com/elitefuel.ch" target="_blank" class="insta-item">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80&fit=crop" alt="Instagram 5"/>
+        <div class="insta-overlay">📷</div>
+      </a>
+      <a href="https://www.instagram.com/elitefuel.ch" target="_blank" class="insta-item">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80&fit=crop" alt="Instagram 6"/>
+        <div class="insta-overlay">📷</div>
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="https://www.instagram.com/elitefuel.ch" target="_blank" class="btn btn-outline">Auf Instagram folgen</a>
+    </div>
+  </div>
+</section>
+
 <!-- NEWSLETTER -->
 <section class="newsletter">
   <p class="section-tag">Rejoignez la Maison</p>
@@ -558,7 +790,8 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
   <a href="#products" onclick="toggleMenu()">Collection</a>
   <a href="#bundle" onclick="toggleMenu()">Bundles</a>
   <a href="#yoga" onclick="toggleMenu()">Studio</a>
-  <a href="#philosophy" onclick="toggleMenu()">Maison</a>
+  <a href="#member" onclick="toggleMenu()">Circle</a>
+  <a href="#blog" onclick="toggleMenu()">Journal</a>
 </div>
 
 <!-- LANGUAGE SWITCHER -->
@@ -883,6 +1116,27 @@ function showNotif(msg){
   n.textContent='✦ '+msg;
   n.classList.add('show');
   setTimeout(()=>n.classList.remove('show'),2500);
+}
+
+function openMember(tier){
+  const descs={
+    Silver:'Kostenlos starten — erhalte Frühzugang, 5% Rabatt und Zugang zum exklusiven Blog.',
+    Gold:'Werde Gold-Mitglied und geniesse 15% Rabatt, monatliche Yoga-Einheit und persönliche Ernährungsberatung.',
+    Platinum:'Das Ultimative — unbegrenzte Yoga-Kurse, 25% Rabatt, monatliche Überraschungsbox und VIP-Events.'
+  };
+  document.getElementById('modal-title').textContent=`${tier} Membership`;
+  document.getElementById('modal-desc').textContent=descs[tier];
+  document.getElementById('member-modal-overlay').classList.add('open');
+  document.getElementById('member-modal').classList.add('open');
+}
+function closeMemberModal(){
+  document.getElementById('member-modal-overlay').classList.remove('open');
+  document.getElementById('member-modal').classList.remove('open');
+}
+function submitMember(e){
+  e.preventDefault();
+  closeMemberModal();
+  showNotif('✦ Willkommen im ÉLITE Circle! 🌸');
 }
 
 function toggleMenu(){
