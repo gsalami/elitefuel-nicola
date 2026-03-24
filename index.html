@@ -204,14 +204,30 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
 .tier-perks li:last-child{border-bottom:none}
 .tier-btn{width:100%;text-align:center}
 
-/* MODAL */
+/* MODAL (shared) */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;backdrop-filter:blur(4px)}
 .modal-overlay.open{display:block}
-.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.96);width:440px;max-width:90vw;background:var(--deep);border:1px solid var(--border-rose);padding:52px;z-index:301;opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.4,0,.2,1)}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.96);width:480px;max-width:92vw;background:var(--deep);border:1px solid var(--border-rose);padding:52px;z-index:301;opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.4,0,.2,1);max-height:90vh;overflow-y:auto}
 .modal.open{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:all}
 .modal-close{position:absolute;top:20px;right:20px;background:none;border:none;color:var(--gray);cursor:pointer;font-size:18px}
 .modal-close:hover{color:var(--rose)}
 .modal h3{font-family:var(--serif);font-size:32px;font-weight:300;color:var(--cream);margin-top:16px}
+/* YOGA BOOKING MODAL extras */
+.yoga-modal-course{background:rgba(212,160,176,.06);border:1px solid var(--border-rose);padding:20px 24px;margin:24px 0;display:flex;justify-content:space-between;align-items:center}
+.yoga-modal-course-name{font-family:var(--serif);font-size:20px;color:var(--cream)}
+.yoga-modal-course-price{font-family:var(--serif);font-size:24px;color:var(--gold)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.form-label{font-size:9px;letter-spacing:.2em;color:var(--gray);text-transform:uppercase}
+.form-input{background:transparent;border:1px solid var(--border-rose);color:var(--cream);padding:12px 16px;font-family:var(--sans);font-size:12px;outline:none;width:100%}
+.form-input:focus{border-color:var(--rose)}
+.form-input option{background:var(--deep);color:var(--cream)}
+.form-check{display:flex;align-items:flex-start;gap:12px;margin:20px 0;font-size:12px;color:var(--gray);line-height:1.6}
+.form-check input{margin-top:3px;accent-color:var(--rose)}
+.booking-steps{display:flex;gap:0;margin-bottom:36px;border:1px solid var(--border-rose)}
+.step{flex:1;padding:12px;text-align:center;font-size:9px;letter-spacing:.15em;color:var(--gray);text-transform:uppercase;border-right:1px solid var(--border-rose)}
+.step:last-child{border-right:none}
+.step.active{background:rgba(212,160,176,.08);color:var(--rose-light)}
 
 /* BLOG */
 .blog-section{padding:140px 60px;background:var(--black);border-top:1px solid var(--border-rose)}
@@ -669,6 +685,102 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
     <input class="newsletter-input" type="email" id="modal-email" placeholder="Deine E-Mail" required style="width:100%;margin-bottom:24px;border-right:1px solid var(--border-rose)"/>
     <button class="btn btn-primary" style="width:100%;text-align:center" type="submit">Bestätigen & beitreten</button>
   </form>
+</div>
+
+<!-- YOGA BOOKING MODAL -->
+<div class="modal" id="yoga-modal">
+  <button class="modal-close" onclick="closeYogaModal()">✕</button>
+  <p class="section-tag">Le Studio · Buchung</p>
+  <h3 id="yoga-modal-title">Kurs buchen</h3>
+
+  <div class="yoga-modal-course">
+    <div>
+      <p class="yoga-modal-course-name" id="yoga-modal-course-name">Morning Flow</p>
+      <p style="font-size:10px;letter-spacing:.15em;color:var(--gray);margin-top:4px" id="yoga-modal-course-detail">Di & Do · 07:00</p>
+    </div>
+    <span class="yoga-modal-course-price" id="yoga-modal-course-price">CHF 45</span>
+  </div>
+
+  <div class="booking-steps">
+    <div class="step active" id="step1-indicator">1 · Daten</div>
+    <div class="step" id="step2-indicator">2 · Termin</div>
+    <div class="step" id="step3-indicator">3 · Bestätigung</div>
+  </div>
+
+  <!-- Step 1: Personal -->
+  <div id="yoga-step1">
+    <div class="form-row">
+      <div class="form-field">
+        <label class="form-label">Vorname</label>
+        <input class="form-input" id="yoga-fname" type="text" placeholder="Marie" required/>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Nachname</label>
+        <input class="form-input" id="yoga-lname" type="text" placeholder="Müller" required/>
+      </div>
+    </div>
+    <div class="form-field">
+      <label class="form-label">E-Mail</label>
+      <input class="form-input" id="yoga-email" type="email" placeholder="marie@example.com" required/>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Telefon (optional)</label>
+      <input class="form-input" id="yoga-phone" type="tel" placeholder="+41 79 123 45 67"/>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Erfahrungslevel</label>
+      <select class="form-input" id="yoga-level">
+        <option value="">Bitte wählen…</option>
+        <option>Einsteigerin</option>
+        <option>Etwas Erfahrung</option>
+        <option>Fortgeschritten</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" style="width:100%;text-align:center;margin-top:8px" onclick="yogaStep(2)">Weiter →</button>
+  </div>
+
+  <!-- Step 2: Date -->
+  <div id="yoga-step2" style="display:none">
+    <div class="form-field">
+      <label class="form-label">Datum auswählen</label>
+      <input class="form-input" id="yoga-date" type="date" required/>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Anzahl Personen</label>
+      <select class="form-input" id="yoga-persons">
+        <option>1 Person</option>
+        <option>2 Personen</option>
+        <option>3 Personen</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Bemerkungen (optional)</label>
+      <input class="form-input" id="yoga-notes" type="text" placeholder="Verletzungen, Wünsche…"/>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" id="yoga-terms" required/>
+      <label for="yoga-terms">Ich akzeptiere die AGB und die Stornierungsbedingungen (bis 24h vor dem Kurs kostenlos).</label>
+    </div>
+    <div style="display:flex;gap:12px">
+      <button class="btn btn-outline" style="flex:1;text-align:center" onclick="yogaStep(1)">← Zurück</button>
+      <button class="btn btn-primary" style="flex:2;text-align:center" onclick="yogaStep(3)">Jetzt buchen →</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Confirmation -->
+  <div id="yoga-step3" style="display:none;text-align:center;padding:20px 0">
+    <div style="font-size:56px;margin-bottom:24px">🌸</div>
+    <h3 style="font-family:var(--serif);font-size:28px;color:var(--cream);margin-bottom:16px">Buchung bestätigt!</h3>
+    <p style="font-size:13px;color:var(--gray);line-height:2;margin-bottom:32px">Eine Bestätigung wurde an deine E-Mail gesendet.<br/>Wir freuen uns auf dich!</p>
+    <div style="background:rgba(212,160,176,.06);border:1px solid var(--border-rose);padding:24px;margin-bottom:32px;text-align:left">
+      <p style="font-size:11px;letter-spacing:.15em;color:var(--rose);margin-bottom:16px;text-transform:uppercase">Buchungsdetails</p>
+      <p id="confirm-name" style="font-family:var(--serif);font-size:18px;color:var(--cream);margin-bottom:8px"></p>
+      <p id="confirm-course" style="font-size:12px;color:var(--gray)"></p>
+      <p id="confirm-date" style="font-size:12px;color:var(--gray)"></p>
+      <p id="confirm-price" style="font-family:var(--serif);font-size:22px;color:var(--gold);margin-top:16px"></p>
+    </div>
+    <button class="btn btn-outline" style="width:100%;text-align:center" onclick="closeYogaModal()">Fenster schliessen</button>
+  </div>
 </div>
 
 <!-- BLOG -->
@@ -1143,9 +1255,59 @@ function toggleMenu(){
   document.getElementById('mobile-menu').classList.toggle('open');
 }
 
+const yogaCourses = {
+  'Morning Flow':    {detail:'Di & Do · 07:00 — 08:15', price:'CHF 45'},
+  'Yin & Restore':   {detail:'Mi · 19:00 — 20:30',      price:'CHF 50'},
+  'Power Vinyasa':   {detail:'Sa · 09:00 — 10:30',      price:'CHF 55'},
+  'Weekend Retreat': {detail:'1× monatlich · Fr–So',    price:'CHF 390'}
+};
+
 function bookYoga(course){
-  const msgs={de:`✦ ${course} — Anfrage erhalten!`,pt:`✦ ${course} — Pedido recebido!`};
-  showNotif(msgs[currentLang]||`✦ ${course} booked!`);
+  const c = yogaCourses[course] || {detail:'', price:''};
+  document.getElementById('yoga-modal-title').textContent = course + ' buchen';
+  document.getElementById('yoga-modal-course-name').textContent = course;
+  document.getElementById('yoga-modal-course-detail').textContent = c.detail;
+  document.getElementById('yoga-modal-course-price').textContent = c.price;
+  // Set min date to tomorrow
+  const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate()+1);
+  document.getElementById('yoga-date').min = tomorrow.toISOString().split('T')[0];
+  // Reset to step 1
+  yogaStep(1);
+  document.getElementById('member-modal-overlay').classList.add('open');
+  document.getElementById('yoga-modal').classList.add('open');
+}
+
+function closeYogaModal(){
+  document.getElementById('member-modal-overlay').classList.remove('open');
+  document.getElementById('yoga-modal').classList.remove('open');
+  // reset steps
+  yogaStep(1);
+  document.querySelectorAll('.form-input').forEach(el => { if(el.tagName!=='SELECT') el.value=''; });
+}
+
+function yogaStep(step){
+  [1,2,3].forEach(s => {
+    document.getElementById('yoga-step'+s).style.display = s===step ? 'block' : 'none';
+    const ind = document.getElementById('step'+s+'-indicator');
+    if(ind) ind.classList.toggle('active', s===step);
+  });
+  if(step===3){
+    // Fill confirmation
+    const fname = document.getElementById('yoga-fname').value;
+    const lname = document.getElementById('yoga-lname').value;
+    const date  = document.getElementById('yoga-date').value;
+    const course = document.getElementById('yoga-modal-course-name').textContent;
+    const price  = document.getElementById('yoga-modal-course-price').textContent;
+    const persons = document.getElementById('yoga-persons').value;
+    if(!document.getElementById('yoga-terms').checked){
+      alert('Bitte AGB akzeptieren.');
+      yogaStep(2); return;
+    }
+    document.getElementById('confirm-name').textContent  = fname + ' ' + lname;
+    document.getElementById('confirm-course').textContent = '✦ ' + course + ' · ' + persons;
+    document.getElementById('confirm-date').textContent  = '📅 ' + (date || 'Nach Vereinbarung');
+    document.getElementById('confirm-price').textContent = price;
+  }
 }
 
 function subscribeNewsletter(e){
