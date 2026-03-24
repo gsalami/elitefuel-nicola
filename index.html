@@ -910,129 +910,86 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
   </div>
 </div>
 
-<!-- CHECKOUT MODAL -->
+<!-- CHECKOUT MODAL — 2 Schritte -->
 <div class="modal" id="checkout-modal">
   <button class="modal-close" onclick="closeCheckout()">✕</button>
-  <p class="section-tag">Sicherer Checkout</p>
-  <h3 style="font-family:var(--serif);font-size:28px;font-weight:300;color:var(--cream);margin:12px 0 28px">Deine Bestellung</h3>
+  <p class="section-tag">🔒 Sicherer Checkout</p>
+  <h3 style="font-family:var(--serif);font-size:26px;font-weight:300;color:var(--cream);margin:12px 0 24px">Bestellung abschliessen</h3>
 
-  <div class="booking-steps">
-    <div class="step active" id="co-step1-ind">1 · Produkte</div>
-    <div class="step" id="co-step2-ind">2 · Lieferung</div>
-    <div class="step" id="co-step3-ind">3 · Zahlung</div>
-    <div class="step" id="co-step4-ind">4 · Bestätigung</div>
-  </div>
-
-  <!-- Step 1: Order Summary -->
+  <!-- SCHRITT 1: Alles auf einer Seite -->
   <div id="co-step1">
+    <!-- Warenkorb kompakt -->
     <div id="co-cart-summary"></div>
-    <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border-rose);padding-top:20px;margin-top:20px">
-      <span style="font-size:12px;letter-spacing:.1em;color:var(--gray)">TOTAL</span>
-      <span id="co-total" style="font-family:var(--serif);font-size:24px;color:var(--gold)"></span>
+    <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border-rose);padding:16px 0;margin-bottom:24px">
+      <span style="font-size:11px;letter-spacing:.15em;color:var(--gray)">TOTAL</span>
+      <span id="co-total" style="font-family:var(--serif);font-size:22px;color:var(--gold)"></span>
     </div>
-    <p style="font-size:11px;color:var(--gray);margin:16px 0 28px">🚚 Kostenlose Lieferung · 2–3 Werktage Schweiz</p>
-    <button class="btn btn-primary" style="width:100%;text-align:center" onclick="coStep(2)">Weiter zu Lieferung →</button>
-  </div>
 
-  <!-- Step 2: Delivery -->
-  <div id="co-step2" style="display:none">
+    <!-- Lieferdaten -->
+    <p style="font-size:9px;letter-spacing:.2em;color:var(--rose);text-transform:uppercase;margin-bottom:16px">Lieferadresse</p>
     <div class="form-row">
       <div class="form-field">
-        <label class="form-label">Vorname</label>
-        <input class="form-input" id="co-fname" type="text" placeholder="Marie"/>
+        <input class="form-input" id="co-fname" type="text" placeholder="Vorname *"/>
       </div>
       <div class="form-field">
-        <label class="form-label">Nachname</label>
-        <input class="form-input" id="co-lname" type="text" placeholder="Müller"/>
+        <input class="form-input" id="co-lname" type="text" placeholder="Nachname *"/>
       </div>
     </div>
     <div class="form-field">
-      <label class="form-label">Strasse & Hausnummer</label>
-      <input class="form-input" id="co-street" type="text" placeholder="Bahnhofstrasse 12"/>
+      <input class="form-input" id="co-email" type="email" placeholder="E-Mail *"/>
     </div>
     <div class="form-row">
-      <div class="form-field">
-        <label class="form-label">PLZ</label>
-        <input class="form-input" id="co-plz" type="text" placeholder="8001"/>
+      <div class="form-field" style="flex:2">
+        <input class="form-input" id="co-street" type="text" placeholder="Strasse & Nr. *"/>
       </div>
-      <div class="form-field">
-        <label class="form-label">Ort</label>
-        <input class="form-input" id="co-city" type="text" placeholder="Zürich"/>
+      <div class="form-field" style="flex:1">
+        <input class="form-input" id="co-plz" type="text" placeholder="PLZ *"/>
       </div>
     </div>
     <div class="form-field">
-      <label class="form-label">E-Mail</label>
-      <input class="form-input" id="co-email" type="email" placeholder="marie@example.com"/>
+      <input class="form-input" id="co-city" type="text" placeholder="Ort *"/>
     </div>
-    <div class="form-field">
-      <label class="form-label">Telefon (optional)</label>
-      <input class="form-input" id="co-phone" type="tel" placeholder="+41 79 123 45 67"/>
-    </div>
-    <div style="display:flex;gap:12px;margin-top:8px">
-      <button class="btn btn-outline" style="flex:1;text-align:center" onclick="coStep(1)">← Zurück</button>
-      <button class="btn btn-primary" style="flex:2;text-align:center" onclick="coStep(3)">Weiter zu Zahlung →</button>
-    </div>
-  </div>
 
-  <!-- Step 3: Payment -->
-  <div id="co-step3" style="display:none">
-    <p style="font-size:12px;color:var(--gray);margin-bottom:24px;line-height:1.8">Wähle deine Zahlungsmethode. Alle Transaktionen sind verschlüsselt und sicher.</p>
+    <!-- Zahlung -->
+    <p style="font-size:9px;letter-spacing:.2em;color:var(--rose);text-transform:uppercase;margin:20px 0 14px">Zahlung</p>
     <div class="payment-options">
       <label class="pay-option">
-        <input type="radio" name="payment" value="twint" checked/> 
+        <input type="radio" name="payment" value="twint" checked/>
         <span class="pay-label">💙 TWINT</span>
       </label>
       <label class="pay-option">
-        <input type="radio" name="payment" value="card"/> 
-        <span class="pay-label">💳 Kreditkarte (Visa/MC)</span>
+        <input type="radio" name="payment" value="invoice"/>
+        <span class="pay-label">📄 Rechnung (30 Tage)</span>
       </label>
       <label class="pay-option">
-        <input type="radio" name="payment" value="invoice"/> 
-        <span class="pay-label">📄 Rechnung (Kauf auf Rechnung)</span>
+        <input type="radio" name="payment" value="card"/>
+        <span class="pay-label">💳 Kreditkarte</span>
       </label>
     </div>
-    <div id="card-fields" style="display:none;margin-top:20px">
-      <div class="form-field">
-        <label class="form-label">Kartennummer</label>
-        <input class="form-input" type="text" placeholder="4242 4242 4242 4242" maxlength="19"/>
-      </div>
-      <div class="form-row">
-        <div class="form-field">
-          <label class="form-label">Gültigkeit</label>
-          <input class="form-input" type="text" placeholder="MM/JJ"/>
-        </div>
-        <div class="form-field">
-          <label class="form-label">CVC</label>
-          <input class="form-input" type="text" placeholder="123" maxlength="3"/>
-        </div>
-      </div>
+
+    <div class="form-check" style="margin:20px 0">
+      <input type="checkbox" id="co-agb"/>
+      <label for="co-agb" style="font-size:11px;color:var(--gray)">Ich akzeptiere die AGB und Datenschutzerklärung.</label>
     </div>
-    <div class="form-check" style="margin-top:20px">
-      <input type="checkbox" id="co-agb" required/>
-      <label for="co-agb">Ich akzeptiere die AGB und Datenschutzerklärung von ÉLITE FUEL.</label>
-    </div>
-    <div style="display:flex;gap:12px;margin-top:16px">
-      <button class="btn btn-outline" style="flex:1;text-align:center" onclick="coStep(2)">← Zurück</button>
-      <button class="btn btn-primary" style="flex:2;text-align:center" onclick="coStep(4)">Jetzt kaufen 🔒</button>
-    </div>
+
+    <p style="font-size:11px;color:var(--gray);margin-bottom:20px">🚚 Kostenlose Lieferung ab CHF 80 · 2–3 Werktage</p>
+    <button class="btn btn-primary" style="width:100%;text-align:center;font-size:13px;padding:18px" onclick="coConfirm()">Jetzt kaufen 🔒</button>
   </div>
 
-  <!-- Step 4: Confirmation -->
-  <div id="co-step4" style="display:none;text-align:center;padding:24px 0">
-    <div style="font-size:64px;margin-bottom:24px">✨</div>
-    <h3 style="font-family:var(--serif);font-size:28px;color:var(--cream);margin-bottom:16px">Vielen Dank!</h3>
-    <p style="font-size:13px;color:var(--gray);line-height:2;margin-bottom:28px">Deine Bestellung ist eingegangen.<br/>Du erhältst eine Bestätigung per E-Mail.</p>
-    <div style="background:rgba(212,160,176,.06);border:1px solid var(--border-rose);padding:24px;text-align:left;margin-bottom:28px">
-      <p style="font-size:10px;letter-spacing:.2em;color:var(--rose);text-transform:uppercase;margin-bottom:16px">Bestellübersicht</p>
+  <!-- SCHRITT 2: Bestätigung -->
+  <div id="co-step2" style="display:none;text-align:center;padding:16px 0">
+    <div style="font-size:60px;margin-bottom:20px">✨</div>
+    <h3 style="font-family:var(--serif);font-size:28px;color:var(--cream);margin-bottom:12px">Vielen Dank!</h3>
+    <p style="font-size:13px;color:var(--gray);line-height:2;margin-bottom:24px">Bestellung eingegangen. Bestätigung folgt per E-Mail.</p>
+    <div style="background:rgba(212,160,176,.06);border:1px solid var(--border-rose);padding:20px;text-align:left;margin-bottom:24px">
       <div id="co-confirm-items"></div>
-      <div style="border-top:1px solid var(--border-rose);padding-top:16px;margin-top:16px;display:flex;justify-content:space-between">
-        <span style="font-size:12px;color:var(--gray)">Total</span>
+      <div style="border-top:1px solid var(--border-rose);padding-top:14px;margin-top:14px;display:flex;justify-content:space-between">
+        <span style="font-size:11px;color:var(--gray)">Total</span>
         <span id="co-confirm-total" style="font-family:var(--serif);font-size:20px;color:var(--gold)"></span>
       </div>
-      <p id="co-confirm-address" style="font-size:11px;color:var(--gray);margin-top:16px;line-height:1.8"></p>
+      <p id="co-confirm-address" style="font-size:11px;color:var(--gray);margin-top:14px;line-height:1.8"></p>
     </div>
-    <p style="font-size:11px;color:var(--gray);margin-bottom:28px">🚚 Lieferung in 2–3 Werktagen · Tracking per E-Mail</p>
-    <button class="btn btn-outline" style="width:100%;text-align:center" onclick="closeCheckout()">Fenster schliessen</button>
+    <button class="btn btn-outline" style="width:100%;text-align:center" onclick="closeCheckout()">Schliessen</button>
   </div>
 </div>
 
@@ -1380,7 +1337,8 @@ function openCheckout(){
     </div>`).join('');
   const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
   document.getElementById('co-total').textContent = 'CHF ' + total.toFixed(2);
-  coStep(1);
+  document.getElementById('co-step1').style.display='block';
+  document.getElementById('co-step2').style.display='none';
   document.getElementById('member-modal-overlay').classList.add('open');
   document.getElementById('checkout-modal').classList.add('open');
   // Card fields toggle
@@ -1396,31 +1354,24 @@ function closeCheckout(){
   document.getElementById('checkout-modal').classList.remove('open');
 }
 
-function coStep(step){
-  [1,2,3,4].forEach(s=>{
-    document.getElementById('co-step'+s).style.display = s===step ? 'block' : 'none';
-    const ind = document.getElementById('co-step'+s+'-ind');
-    if(ind) ind.classList.toggle('active', s===step);
-  });
-  if(step===4){
-    if(!document.getElementById('co-agb').checked){ alert('Bitte AGB akzeptieren.'); coStep(3); return; }
-    const fname = document.getElementById('co-fname').value || '—';
-    const lname = document.getElementById('co-lname').value || '—';
-    const street= document.getElementById('co-street').value || '—';
-    const plz   = document.getElementById('co-plz').value || '—';
-    const city  = document.getElementById('co-city').value || '—';
-    const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
-    document.getElementById('co-confirm-items').innerHTML = cart.map(i=>`
-      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border-rose)">
-        <span style="font-size:13px;color:var(--cream)">${i.icon} ${i.name} × ${i.qty}</span>
-        <span style="font-size:13px;color:var(--gold-light)">CHF ${(i.price*i.qty).toFixed(2)}</span>
-      </div>`).join('');
-    document.getElementById('co-confirm-total').textContent = 'CHF ' + total.toFixed(2);
-    document.getElementById('co-confirm-address').innerHTML = `📦 ${fname} ${lname}<br>${street}<br>${plz} ${city}`;
-    // Clear cart
-    cart = [];
-    updateCart();
-  }
+function coConfirm(){
+  if(!document.getElementById('co-agb').checked){ showNotif('Bitte AGB akzeptieren.'); return; }
+  const fname = document.getElementById('co-fname').value || '—';
+  const lname = document.getElementById('co-lname').value || '—';
+  const street= document.getElementById('co-street').value || '—';
+  const plz   = document.getElementById('co-plz').value || '—';
+  const city  = document.getElementById('co-city').value || '—';
+  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('co-confirm-items').innerHTML = cart.map(i=>`
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border-rose)">
+      <span style="font-size:13px;color:var(--cream)">${i.icon} ${i.name} × ${i.qty}</span>
+      <span style="font-size:13px;color:var(--gold-light)">CHF ${(i.price*i.qty).toFixed(2)}</span>
+    </div>`).join('');
+  document.getElementById('co-confirm-total').textContent = 'CHF ' + total.toFixed(2);
+  document.getElementById('co-confirm-address').innerHTML = `📦 ${fname} ${lname} · ${street}, ${plz} ${city}`;
+  document.getElementById('co-step1').style.display='none';
+  document.getElementById('co-step2').style.display='block';
+  cart=[]; updateCart();
 }
 
 function showNotif(msg){
