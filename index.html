@@ -100,6 +100,32 @@ h1 em{color:var(--gold);font-style:italic;display:block}
 .quote{font-family:var(--serif);font-size:clamp(32px,4.5vw,56px);font-weight:300;font-style:italic;color:var(--cream);line-height:1.35;margin:28px 0 24px}
 .quote-source{font-size:11px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase}
 
+/* LIFESTYLE GRID */
+.lifestyle-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.lifestyle-item{position:relative;overflow:hidden;aspect-ratio:3/4}
+.lifestyle-item img{width:100%;height:100%;object-fit:cover;filter:grayscale(15%) brightness(.8);transition:all .7s cubic-bezier(.4,0,.2,1)}
+.lifestyle-item:hover img{filter:grayscale(0%) brightness(.9);transform:scale(1.06)}
+.lifestyle-overlay{position:absolute;bottom:0;left:0;right:0;padding:32px 24px;background:linear-gradient(transparent,rgba(0,0,0,.75));opacity:0;transition:.4s}
+.lifestyle-item:hover .lifestyle-overlay{opacity:1}
+.lifestyle-overlay span{font-family:var(--serif);font-size:20px;font-style:italic;color:var(--cream)}
+
+/* YOGA */
+.yoga-section{padding:140px 60px;background:var(--deep);border-bottom:1px solid var(--border)}
+.yoga-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+.yoga-image{position:relative}
+.yoga-image img{width:100%;height:600px;object-fit:cover;filter:grayscale(10%) brightness(.85)}
+.yoga-img-tag{position:absolute;bottom:24px;left:24px;font-size:9px;letter-spacing:.25em;color:var(--gold);border:1px solid var(--gold);padding:8px 16px;background:rgba(10,10,10,.8);text-transform:uppercase}
+.yoga-text h2{font-family:var(--serif);font-size:clamp(44px,5vw,68px);font-weight:300;line-height:1.05;color:var(--cream);margin:20px 0 28px}
+.yoga-text h2 em{color:var(--gold)}
+.yoga-text>p{font-size:14px;line-height:2;color:var(--gray);margin-bottom:48px}
+.yoga-courses{display:flex;flex-direction:column;gap:0}
+.yoga-course{display:flex;align-items:center;justify-content:space-between;padding:24px 0;border-bottom:1px solid var(--border);gap:20px}
+.yoga-course:first-child{border-top:1px solid var(--border)}
+.yoga-course-info{display:flex;flex-direction:column;gap:6px}
+.yoga-course-name{font-family:var(--serif);font-size:20px;color:var(--cream)}
+.yoga-course-detail{font-size:10px;letter-spacing:.12em;color:var(--gray)}
+.yoga-btn{padding:12px 28px;font-size:10px;white-space:nowrap}
+
 /* NEWSLETTER */
 .newsletter{padding:120px 60px;background:var(--deep);border-top:1px solid var(--border);text-align:center}
 .newsletter h3{font-family:var(--serif);font-size:clamp(36px,4vw,56px);font-weight:300;color:var(--cream);margin:20px 0 16px}
@@ -154,13 +180,16 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
 .notif.show{transform:translateX(-50%) translateY(0)}
 
 @media(max-width:1024px){
+  .lifestyle-grid{grid-template-columns:repeat(2,1fr)}
+  .yoga-inner{grid-template-columns:1fr;gap:60px}
+}
   .products-grid{grid-template-columns:repeat(2,1fr)}
   .footer-top{grid-template-columns:1fr 1fr}
 }
 @media(max-width:768px){
   nav{padding:20px 24px}
   .nav-links{display:none}
-  .hero,.products,.bundle-section,.philosophy,.newsletter,footer{padding-left:24px;padding-right:24px}
+  .hero,.products,.bundle-section,.philosophy,.yoga-section,.newsletter,footer{padding-left:24px;padding-right:24px}
   .about-strip{grid-template-columns:1fr;padding:60px 24px}
   .products-grid{grid-template-columns:1fr}
   .bundle-grid{grid-template-columns:1fr;gap:48px}
@@ -170,6 +199,11 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
   .newsletter-input{border-right:1px solid var(--border);margin-bottom:12px}
   .footer-top{grid-template-columns:1fr}
   .footer-bottom{flex-direction:column;gap:16px;text-align:center}
+  .lifestyle-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-images{grid-template-columns:1fr}
+  .hero-img-wide{grid-column:span 1}
+  .yoga-inner{grid-template-columns:1fr;gap:48px}
+  .yoga-image img{height:320px}
 }
 </style>
 </head>
@@ -179,6 +213,7 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
   <div class="nav-links">
     <a href="#products">Collection</a>
     <a href="#bundle">Bundles</a>
+    <a href="#yoga">Studio</a>
     <a href="#philosophy">Maison</a>
   </div>
   <a href="#" class="logo">ÉLITE FUEL</a>
@@ -216,6 +251,12 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
     <span>LUXURY WELLNESS</span><span>✦</span>
     <span>POWERFOOD ONE — MAISON PARTNER</span><span>✦</span>
   </div>
+</div>
+
+<!-- IMAGE STRIP -->
+<div class="hero-images">
+  <img class="hero-img hero-img-wide" src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1200&q=80&fit=crop" alt="Woman yoga nature" loading="lazy"/>
+  <img class="hero-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=80&fit=crop" alt="Yoga elegance" loading="lazy"/>
 </div>
 
 <!-- NUMBERS -->
@@ -295,6 +336,71 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
     <p class="section-tag">Notre Philosophie</p>
     <blockquote class="quote">"Your body deserves the same standards as your lifestyle."</blockquote>
     <p class="quote-source">— ÉLITE FUEL, Maison Zurich</p>
+  </div>
+</section>
+
+<!-- LIFESTYLE IMAGES -->
+<div class="lifestyle-grid">
+  <div class="lifestyle-item">
+    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80&fit=crop" alt="Morning ritual" loading="lazy"/>
+    <div class="lifestyle-overlay"><span data-i18n="lifestyle_1">Morgenritual</span></div>
+  </div>
+  <div class="lifestyle-item">
+    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80&fit=crop" alt="Yoga elegance" loading="lazy"/>
+    <div class="lifestyle-overlay"><span data-i18n="lifestyle_2">Balance & Kraft</span></div>
+  </div>
+  <div class="lifestyle-item">
+    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80&fit=crop" alt="Clean nutrition" loading="lazy"/>
+    <div class="lifestyle-overlay"><span data-i18n="lifestyle_3">Clean Nutrition</span></div>
+  </div>
+  <div class="lifestyle-item">
+    <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&q=80&fit=crop" alt="Wellness luxury" loading="lazy"/>
+    <div class="lifestyle-overlay"><span data-i18n="lifestyle_4">Luxury Wellness</span></div>
+  </div>
+</div>
+
+<!-- YOGA -->
+<section class="yoga-section" id="yoga">
+  <div class="yoga-inner">
+    <div class="yoga-image">
+      <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=900&q=80&fit=crop" alt="Yoga class luxury" loading="lazy"/>
+      <div class="yoga-img-tag" data-i18n="yoga_badge">Zürich · Exclusive</div>
+    </div>
+    <div class="yoga-text">
+      <p class="section-tag" data-i18n="yoga_tag">Le Studio</p>
+      <h2 data-i18n="yoga_h2">Élite Yoga<br/><em>Retreats</em></h2>
+      <p data-i18n="yoga_desc">Exklusive Yoga-Kurse, kuratiert für die anspruchsvolle Frau. Kleine Gruppen. Erstklassige Instruktorinnen. Kombiniert mit unserem Nutrition-Programm für maximale Transformation.</p>
+      <div class="yoga-courses" id="yoga-courses">
+        <div class="yoga-course">
+          <div class="yoga-course-info">
+            <span class="yoga-course-name" data-i18n="course_1_name">Morning Flow</span>
+            <span class="yoga-course-detail" data-i18n="course_1_detail">Di & Do · 07:00 — 08:15 · CHF 45/Kurs</span>
+          </div>
+          <button class="btn btn-outline yoga-btn" data-i18n="course_btn" onclick="bookYoga('Morning Flow')">Buchen</button>
+        </div>
+        <div class="yoga-course">
+          <div class="yoga-course-info">
+            <span class="yoga-course-name" data-i18n="course_2_name">Yin & Restore</span>
+            <span class="yoga-course-detail" data-i18n="course_2_detail">Mi · 19:00 — 20:30 · CHF 50/Kurs</span>
+          </div>
+          <button class="btn btn-outline yoga-btn" data-i18n="course_btn" onclick="bookYoga('Yin & Restore')">Buchen</button>
+        </div>
+        <div class="yoga-course">
+          <div class="yoga-course-info">
+            <span class="yoga-course-name" data-i18n="course_3_name">Power Vinyasa</span>
+            <span class="yoga-course-detail" data-i18n="course_3_detail">Sa · 09:00 — 10:30 · CHF 55/Kurs</span>
+          </div>
+          <button class="btn btn-outline yoga-btn" data-i18n="course_btn" onclick="bookYoga('Power Vinyasa')">Buchen</button>
+        </div>
+        <div class="yoga-course">
+          <div class="yoga-course-info">
+            <span class="yoga-course-name" data-i18n="course_4_name">Weekend Retreat</span>
+            <span class="yoga-course-detail" data-i18n="course_4_detail">1× monatlich · Fr–So · CHF 390</span>
+          </div>
+          <button class="btn btn-primary yoga-btn" data-i18n="course_btn_retreat" onclick="bookYoga('Weekend Retreat')">Anfragen</button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -402,6 +508,15 @@ const translations={
     footer_h_service:"Service",footer_links_service:["Versand","Rückgabe","FAQ","Kontakt"],
     footer_copy:"© 2026 ÉLITE FUEL. Alle Rechte vorbehalten.",
     footer_legal:"Datenschutz · AGB · Cookie-Einstellungen",
+    lifestyle_1:"Morgenritual",lifestyle_2:"Balance & Kraft",lifestyle_3:"Clean Nutrition",lifestyle_4:"Luxury Wellness",
+    yoga_tag:"Le Studio",yoga_badge:"Zürich · Exklusiv",
+    yoga_h2:"Élite Yoga<br/><em>Retreats</em>",
+    yoga_desc:"Exklusive Yoga-Kurse, kuratiert für die anspruchsvolle Frau. Kleine Gruppen. Erstklassige Instruktorinnen. Kombiniert mit unserem Nutrition-Programm für maximale Transformation.",
+    course_1_name:"Morning Flow",course_1_detail:"Di & Do · 07:00 — 08:15 · CHF 45/Kurs",
+    course_2_name:"Yin & Restore",course_2_detail:"Mi · 19:00 — 20:30 · CHF 50/Kurs",
+    course_3_name:"Power Vinyasa",course_3_detail:"Sa · 09:00 — 10:30 · CHF 55/Kurs",
+    course_4_name:"Weekend Retreat",course_4_detail:"1× monatlich · Fr–So · CHF 390",
+    course_btn:"Buchen",course_btn_retreat:"Anfragen",
     notif_added:"zur Tasche hinzugefügt",notif_welcome:"Willkommen im Inner Circle",
     product_tags:["BESTSELLER","MAISON FAVORIT","SONDERAUSGABE","MAISON KLASSIKER","CLEAN FORMULA","TÄGLICHES RITUAL"],
     product_descs:[
@@ -442,6 +557,15 @@ const translations={
     footer_h_service:"Serviço",footer_links_service:["Envio","Devoluções","FAQ","Contacto"],
     footer_copy:"© 2026 ÉLITE FUEL. Todos os direitos reservados.",
     footer_legal:"Privacidade · Termos · Definições de Cookies",
+    lifestyle_1:"Ritual Matinal",lifestyle_2:"Equilíbrio & Força",lifestyle_3:"Nutrição Limpa",lifestyle_4:"Bem-estar de Luxo",
+    yoga_tag:"Le Studio",yoga_badge:"Zurique · Exclusivo",
+    yoga_h2:"Élite Yoga<br/><em>Retreats</em>",
+    yoga_desc:"Aulas de yoga exclusivas, curadas para a mulher exigente. Grupos pequenos. Instrutoras de excelência. Combinadas com o nosso programa de nutrição para uma transformação máxima.",
+    course_1_name:"Morning Flow",course_1_detail:"Ter & Qui · 07:00 — 08:15 · CHF 45/aula",
+    course_2_name:"Yin & Restore",course_2_detail:"Qua · 19:00 — 20:30 · CHF 50/aula",
+    course_3_name:"Power Vinyasa",course_3_detail:"Sáb · 09:00 — 10:30 · CHF 55/aula",
+    course_4_name:"Weekend Retreat",course_4_detail:"1× por mês · Sex–Dom · CHF 390",
+    course_btn:"Reservar",course_btn_retreat:"Consultar",
     notif_added:"adicionado ao saco",notif_welcome:"Bem-vindo ao Círculo Interno",
     product_tags:["MAIS VENDIDO","FAVORITO MAISON","EDIÇÃO ESPECIAL","CLÁSSICO MAISON","FÓRMULA CLEAN","RITUAL DIÁRIO"],
     product_descs:[
@@ -518,6 +642,30 @@ function setLang(lang){
   document.querySelectorAll('.footer-col:nth-child(4) a').forEach((el,i)=>el.textContent=t.footer_links_service[i]);
   document.querySelectorAll('.footer-bottom span')[0].textContent=t.footer_copy;
   document.querySelectorAll('.footer-bottom span')[1].textContent=t.footer_legal;
+
+  // Lifestyle captions
+  ['lifestyle_1','lifestyle_2','lifestyle_3','lifestyle_4'].forEach((k,i)=>{
+    const els=document.querySelectorAll('.lifestyle-overlay span');
+    if(els[i])els[i].textContent=t[k];
+  });
+
+  // Yoga
+  document.querySelector('[data-i18n="yoga_tag"]').textContent=t.yoga_tag;
+  document.querySelector('[data-i18n="yoga_badge"]').textContent=t.yoga_badge;
+  document.querySelector('[data-i18n="yoga_h2"]').innerHTML=t.yoga_h2;
+  document.querySelector('[data-i18n="yoga_desc"]').textContent=t.yoga_desc;
+  [['course_1_name',t.course_1_name],['course_1_detail',t.course_1_detail],
+   ['course_2_name',t.course_2_name],['course_2_detail',t.course_2_detail],
+   ['course_3_name',t.course_3_name],['course_3_detail',t.course_3_detail],
+   ['course_4_name',t.course_4_name],['course_4_detail',t.course_4_detail]
+  ].forEach(([k,v])=>{const el=document.querySelector(`[data-i18n="${k}"]`);if(el)el.textContent=v;});
+  document.querySelectorAll('[data-i18n="course_btn"]').forEach(el=>el.textContent=t.course_btn);
+  const retreatBtn=document.querySelector('[data-i18n="course_btn_retreat"]');
+  if(retreatBtn)retreatBtn.textContent=t.course_btn_retreat;
+
+  // Nav yoga link
+  const navYoga=document.querySelectorAll('.nav-links a')[2];
+  if(navYoga)navYoga.textContent=t.nav_maison;
 
   // Products
   rerenderProducts();
@@ -605,6 +753,11 @@ function showNotif(msg){
   n.textContent='✦ '+msg;
   n.classList.add('show');
   setTimeout(()=>n.classList.remove('show'),2500);
+}
+
+function bookYoga(course){
+  const msgs={de:`✦ ${course} — Anfrage erhalten!`,pt:`✦ ${course} — Pedido recebido!`};
+  showNotif(msgs[currentLang]||`✦ ${course} booked!`);
 }
 
 function subscribeNewsletter(e){
