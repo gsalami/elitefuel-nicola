@@ -184,6 +184,14 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
 .footer-col a:hover{color:var(--gold)}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:36px;font-size:11px;color:rgba(136,136,136,.5);letter-spacing:.1em}
 
+/* MOBILE MENU */
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--rose-light);font-size:20px;cursor:pointer;padding:4px}
+@media(max-width:768px){.mobile-menu-btn{display:block}}
+.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(26,18,24,.97);border-bottom:1px solid var(--border-rose);padding:24px 20px;z-index:99;backdrop-filter:blur(16px)}
+.mobile-menu.open{display:block}
+.mobile-menu a{display:block;padding:16px 0;font-size:13px;letter-spacing:.15em;color:var(--cream);text-decoration:none;border-bottom:1px solid var(--border-rose);text-transform:uppercase}
+.mobile-menu a:hover{color:var(--rose-light)}
+
 /* LANGUAGE SWITCHER */
 .lang-switch{position:fixed;bottom:32px;right:32px;z-index:150;display:flex;align-items:center;gap:8px;background:rgba(17,17,17,.95);border:1px solid var(--border);padding:10px 18px;backdrop-filter:blur(8px)}
 .lang-btn{background:none;border:none;color:var(--gray);font-family:var(--sans);font-size:11px;letter-spacing:.2em;cursor:pointer;transition:.3s;padding:0}
@@ -198,28 +206,84 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
 @media(max-width:1024px){
   .lifestyle-grid{grid-template-columns:repeat(2,1fr)}
   .yoga-inner{grid-template-columns:1fr;gap:60px}
-}
   .products-grid{grid-template-columns:repeat(2,1fr)}
   .footer-top{grid-template-columns:1fr 1fr}
 }
 @media(max-width:768px){
-  nav{padding:20px 24px}
+  /* NAV — Hamburger feel */
+  nav{padding:16px 20px}
   .nav-links{display:none}
-  .hero,.products,.bundle-section,.philosophy,.yoga-section,.newsletter,footer{padding-left:24px;padding-right:24px}
-  .about-strip{grid-template-columns:1fr;padding:60px 24px}
-  .products-grid{grid-template-columns:1fr}
-  .bundle-grid{grid-template-columns:1fr;gap:48px}
-  .bundle-visual{display:none}
-  .cart{width:100%;right:-100%}
-  .newsletter-form{flex-direction:column}
-  .newsletter-input{border-right:1px solid var(--border);margin-bottom:12px}
-  .footer-top{grid-template-columns:1fr}
-  .footer-bottom{flex-direction:column;gap:16px;text-align:center}
+  .logo{font-size:18px;letter-spacing:.2em}
+  .nav-cta a{padding:8px 16px;font-size:10px}
+
+  /* HERO — kompakt */
+  .hero{padding:100px 20px 60px;min-height:92vh}
+  h1{font-size:clamp(44px,13vw,72px);line-height:1}
+  .hero-sub{font-size:13px;margin-bottom:36px}
+  .hero-actions{flex-direction:column;align-items:center;gap:12px}
+  .btn{width:100%;max-width:300px;text-align:center;padding:18px 24px}
+
+  /* MARQUEE */
+  .marquee-bar{padding:12px 0}
+
+  /* NUMBERS */
+  .about-strip{grid-template-columns:repeat(3,1fr);padding:48px 20px;gap:20px}
+  .about-num{font-size:36px}
+  .about-label{font-size:9px}
+
+  /* IMAGES */
+  .hero-images{grid-template-columns:1fr 1fr;max-height:220px}
+  .hero-img{height:220px}
+  .hero-img-wide{grid-column:span 2}
   .lifestyle-grid{grid-template-columns:repeat(2,1fr)}
-  .hero-images{grid-template-columns:1fr}
-  .hero-img-wide{grid-column:span 1}
-  .yoga-inner{grid-template-columns:1fr;gap:48px}
-  .yoga-image img{height:320px}
+  .lifestyle-item{aspect-ratio:1/1}
+
+  /* PRODUCTS */
+  .products{padding:60px 20px}
+  .section-intro{margin-bottom:40px}
+  .products-grid{grid-template-columns:1fr;gap:2px}
+  .product{padding:36px 24px}
+  .product-emoji{font-size:40px;margin-bottom:20px}
+  .product-name{font-size:24px}
+
+  /* BUNDLE */
+  .bundle-section{padding:60px 20px}
+  .bundle-grid{grid-template-columns:1fr;gap:40px}
+  .bundle-visual{display:none}
+  .bundle-text h2{font-size:36px}
+  .bundle-price{font-size:40px}
+  .btn.btn-primary{width:100%;text-align:center}
+
+  /* YOGA */
+  .yoga-section{padding:60px 20px}
+  .yoga-inner{grid-template-columns:1fr;gap:40px}
+  .yoga-image img{height:260px}
+  .yoga-course{flex-wrap:wrap;gap:12px}
+  .yoga-btn{width:100%;text-align:center}
+
+  /* PHILOSOPHY */
+  .philosophy{padding:80px 20px}
+  .quote{font-size:clamp(22px,6vw,32px)}
+
+  /* NEWSLETTER */
+  .newsletter{padding:60px 20px}
+  .newsletter-form{flex-direction:column;gap:0}
+  .newsletter-input{border-right:1px solid var(--border-rose);border-bottom:none;padding:16px 20px}
+  .newsletter-btn{padding:16px 20px;width:100%}
+
+  /* CART */
+  .cart{width:100%;right:-100%}
+
+  /* FOOTER */
+  footer{padding:60px 20px 40px}
+  .footer-top{grid-template-columns:1fr;gap:36px}
+  .footer-bottom{flex-direction:column;gap:12px;text-align:center;font-size:10px}
+
+  /* LANG SWITCHER */
+  .lang-switch{bottom:20px;right:20px;padding:8px 14px}
+
+  /* General spacing */
+  .hero,.products,.bundle-section,.philosophy,.yoga-section,.newsletter,footer{padding-left:20px;padding-right:20px}
 }
 </style>
 </head>
@@ -233,7 +297,10 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
     <a href="#philosophy">Maison</a>
   </div>
   <a href="#" class="logo">ÉLITE FUEL</a>
-  <div class="nav-cta"><a href="#" onclick="openCart();return false">Bag (<span id="count">0</span>)</a></div>
+  <div style="display:flex;align-items:center;gap:16px">
+    <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    <div class="nav-cta"><a href="#" onclick="openCart();return false">Bag (<span id="count">0</span>)</a></div>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -445,6 +512,14 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
     <div class="cart-total" id="cart-total"></div>
     <button class="btn btn-primary" style="width:100%;text-align:center">Proceed to Checkout</button>
   </div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#products" onclick="toggleMenu()">Collection</a>
+  <a href="#bundle" onclick="toggleMenu()">Bundles</a>
+  <a href="#yoga" onclick="toggleMenu()">Studio</a>
+  <a href="#philosophy" onclick="toggleMenu()">Maison</a>
 </div>
 
 <!-- LANGUAGE SWITCHER -->
@@ -769,6 +844,10 @@ function showNotif(msg){
   n.textContent='✦ '+msg;
   n.classList.add('show');
   setTimeout(()=>n.classList.remove('show'),2500);
+}
+
+function toggleMenu(){
+  document.getElementById('mobile-menu').classList.toggle('open');
 }
 
 function bookYoga(course){
