@@ -213,6 +213,11 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
 .chat-input:focus{border-color:var(--rose)}
 .chat-send{background:linear-gradient(135deg,var(--rose),var(--gold));border:none;color:var(--black);width:44px;border-radius:2px;cursor:pointer;font-size:16px;transition:.3s}
 .chat-send:hover{opacity:.85}
+.typing-indicator .chat-bubble{display:flex;gap:5px;align-items:center;padding:14px 18px}
+.dot{width:6px;height:6px;background:var(--rose);border-radius:50%;animation:bounce .9s infinite}
+.dot:nth-child(2){animation-delay:.2s}
+.dot:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
 @media(max-width:768px){
   .chatbot-window{width:calc(100vw - 32px);right:16px;bottom:140px;height:420px}
   .chatbot-btn{right:16px;bottom:72px}
@@ -899,51 +904,44 @@ function subscribeNewsletter(e){
 // Init with German
 setLang('de');
 
-// ── CHATBOT ──
-const botResponses = {
-  de: {
-    greet: ["Hallo! Ich bin Nina, deine persönliche ÉLITE FUEL Beraterin. 🌸 Womit kann ich dir helfen?"],
-    products: ["Unsere beliebtesten Produkte sind Boom Whey, Clear Iso Whey und Matcha Latte Whey. Alle sind Clean Label und in der Schweiz entwickelt. Was interessiert dich?"],
-    yoga: ["Unser Studio bietet 4 exklusive Kurse an: Morning Flow, Yin & Restore, Power Vinyasa und das monatliche Weekend Retreat. Welcher Kurs spricht dich an?"],
-    price: ["Unsere Produkte beginnen ab CHF 19.90 für Vitamin D3+K2 bis CHF 39.90 für Clear Iso Whey. Das Morning Ritual Bundle gibt es für CHF 89 — 15% Ersparnis!"],
-    delivery: ["Wir liefern kostenlos ab CHF 80 Bestellwert. Lieferzeit: 2–3 Werktage in der Schweiz."],
-    vegan: ["Ja! Unser Vegan Protein und Vegan Omega 3 sind 100% pflanzlich, clean und ethisch produziert. 🌿"],
-    bundle: ["Das Morning Ritual Bundle enthält Clear Iso Whey, Matcha Latte Whey und Vegan Omega 3 — perfekt für deinen Morgenritual. CHF 89 statt CHF 104.70."],
-    default: ["Ich helfe dir gerne! Frag mich nach unseren Produkten, Yoga-Kursen, Preisen oder Lieferung. 🌸", "Interessant! Kann ich dir bei Produkten, Kursbuchungen oder dem Bundle helfen?", "Gerne! Schau dir unsere Kollektion an oder frag mich direkt. Was möchtest du wissen?"]
-  },
-  pt: {
-    greet: ["Olá! Sou a Nina, a tua conselheira pessoal ÉLITE FUEL. 🌸 Como posso ajudar-te?"],
-    products: ["Os nossos produtos mais populares são Boom Whey, Clear Iso Whey e Matcha Latte Whey. Todos Clean Label, desenvolvidos na Suíça. O que te interessa?"],
-    yoga: ["O nosso estúdio oferece 4 aulas exclusivas: Morning Flow, Yin & Restore, Power Vinyasa e o Retiro de Fim de Semana mensal. Qual te interessa?"],
-    price: ["Os nossos produtos começam nos CHF 19.90 para a Vitamina D3+K2 até CHF 39.90 para o Clear Iso Whey. O Morning Ritual Bundle por CHF 89 — 15% de poupança!"],
-    delivery: ["Entrega gratuita a partir de CHF 80. Prazo de entrega: 2–3 dias úteis na Suíça."],
-    vegan: ["Sim! A nossa Proteína Vegan e o Ómega 3 Vegan são 100% vegetais, limpos e produzidos de forma ética. 🌿"],
-    bundle: ["O Morning Ritual Bundle contém Clear Iso Whey, Matcha Latte Whey e Ómega 3 Vegan — perfeito para o teu ritual matinal. CHF 89 em vez de CHF 104.70."],
-    default: ["Estou aqui para ajudar! Pergunta-me sobre produtos, aulas de yoga, preços ou entrega. 🌸", "Interessante! Posso ajudar-te com produtos, reservas de aulas ou o bundle?", "Com prazer! Consulta a nossa colecção ou pergunta-me directamente. O que queres saber?"]
-  }
-};
+// ── CHATBOT mit OpenAI ──
+const NINA_SYSTEM = `Du bist Nina, die persönliche Wellness- und Ernährungsberaterin von ÉLITE FUEL – einem Premium-Schweizer Nutrition-Brand für stilvolle, anspruchsvolle Frauen.
+
+Dein Charakter:
+- Warm, elegant, empathisch – wie eine persönliche Concierge
+- Kennst alle Produkte in- und auswendig
+- Gibst persönliche Empfehlungen basierend auf Zielen der Kundin
+- Sprichst die Sprache der Kundin (Deutsch oder Portugiesisch)
+- Kurze, klare Antworten – max. 3 Sätze. Elegant, nie aufdringlich.
+
+Produkte:
+- Boom Whey (CHF 28.90) – 25g Protein, Bestseller
+- Clear Iso Whey (CHF 39.90) – erfrischend, wie ein Cocktail
+- Matcha Latte Whey (CHF 34.90) – ceremonial grade, kein Zucker
+- Protein Ice Coffee (CHF 32.90) – 21g Protein + 80mg Koffein
+- Vegan Omega 3 (CHF 29.90) – aus Mikroalgen
+- Vitamin D3+K2 (CHF 19.90) – Immunität & Energie
+- Morning Ritual Bundle (CHF 89) – Clear Whey + Matcha + Omega 3, 15% Ersparnis
+
+Yoga Studio:
+- Morning Flow: Di & Do 07:00 – CHF 45
+- Yin & Restore: Mi 19:00 – CHF 50
+- Power Vinyasa: Sa 09:00 – CHF 55
+- Weekend Retreat: monatlich Fr–So – CHF 390
+
+Lieferung: kostenlos ab CHF 80, 2–3 Werktage Schweiz.`;
 
 let chatOpen = false;
-let msgCount = 0;
-
-function getBotReply(input, lang) {
-  const t = botResponses[lang] || botResponses.de;
-  const msg = input.toLowerCase();
-  if (/hallo|hi|hey|guten|olá|oi|bom/.test(msg)) return t.greet[0];
-  if (/preis|kosten|chf|wie viel|quanto|preço/.test(msg)) return t.price[0];
-  if (/yoga|kurs|studio|retreat|aula/.test(msg)) return t.yoga[0];
-  if (/lief|versand|deliver|envio|days|tage/.test(msg)) return t.delivery[0];
-  if (/vegan|vegán|pflanz|plant/.test(msg)) return t.vegan[0];
-  if (/bundle|box|ritual|set/.test(msg)) return t.bundle[0];
-  if (/produkt|whey|protein|matcha|omega|vitamin|colect/.test(msg)) return t.products[0];
-  return t.default[msgCount % t.default.length];
-}
+let chatHistory = [];
 
 function toggleChat() {
   chatOpen = !chatOpen;
   document.getElementById('chatbot-window').classList.toggle('open', chatOpen);
   if (chatOpen && document.getElementById('chat-messages').children.length === 0) {
-    setTimeout(() => addBotMsg(botResponses[currentLang].greet[0]), 400);
+    const greet = currentLang === 'pt'
+      ? 'Olá! Sou a Nina, a tua conselheira ÉLITE FUEL. 🌸 Como posso ajudar-te hoje?'
+      : 'Hallo! Ich bin Nina, deine persönliche ÉLITE FUEL Beraterin. 🌸 Wie kann ich dir heute helfen?';
+    setTimeout(() => addBotMsg(greet), 400);
   }
 }
 
@@ -965,14 +963,61 @@ function addUserMsg(text) {
   msgs.scrollTop = msgs.scrollHeight;
 }
 
-function sendChat() {
+function showTyping() {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg bot typing-indicator';
+  div.id = 'typing';
+  div.innerHTML = `<span class="chat-avatar">🌸</span><span class="chat-bubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function hideTyping() {
+  const t = document.getElementById('typing');
+  if (t) t.remove();
+}
+
+async function sendChat() {
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
   if (!text) return;
   addUserMsg(text);
   input.value = '';
-  msgCount++;
-  setTimeout(() => addBotMsg(getBotReply(text, currentLang)), 600);
+
+  chatHistory.push({ role: 'user', content: text });
+  showTyping();
+
+  try {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer OPENAI_KEY_PLACEHOLDER'
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: NINA_SYSTEM },
+          ...chatHistory.slice(-8)
+        ],
+        max_tokens: 180,
+        temperature: 0.7
+      })
+    });
+    const data = await res.json();
+    hideTyping();
+    if (data.choices && data.choices[0]) {
+      const reply = data.choices[0].message.content;
+      chatHistory.push({ role: 'assistant', content: reply });
+      addBotMsg(reply);
+    } else {
+      addBotMsg(currentLang === 'pt' ? 'Desculpa, tente novamente.' : 'Entschuldigung, bitte versuche es nochmals.');
+    }
+  } catch(e) {
+    hideTyping();
+    addBotMsg(currentLang === 'pt' ? 'Estou indisponível neste momento. 🌸' : 'Ich bin gerade nicht erreichbar. Bitte versuche es gleich nochmals. 🌸');
+  }
 }
 
 document.addEventListener('keydown', e => {
