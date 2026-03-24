@@ -203,6 +203,11 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
 .tier-perks li{font-size:13px;color:var(--gray);padding:12px 0;border-bottom:1px solid var(--border-rose);line-height:1.6}
 .tier-perks li:last-child{border-bottom:none}
 .tier-btn{width:100%;text-align:center}
+.tier-limit{margin-bottom:24px}
+.tier-limit-bar{display:block;height:3px;background:rgba(212,160,176,.15);border-radius:2px;overflow:hidden;margin-bottom:8px}
+.tier-limit-fill{display:block;height:100%;background:linear-gradient(90deg,var(--rose),var(--gold));border-radius:2px}
+.tier-limit-text{font-size:10px;letter-spacing:.12em;color:var(--gray)}
+.tier-limit-text.urgent{color:var(--rose-light)}
 
 /* MODAL (shared) */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;backdrop-filter:blur(4px)}
@@ -637,6 +642,10 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
     </div>
     <div class="member-tiers">
       <div class="tier tier-silver">
+        <div class="tier-limit">
+          <span class="tier-limit-bar"><span class="tier-limit-fill" style="width:62%"></span></span>
+          <span class="tier-limit-text">62 / 100 Plätze belegt</span>
+        </div>
         <div class="tier-top">
           <span class="tier-icon">🤍</span>
           <h3 class="tier-name">Silver</h3>
@@ -652,6 +661,10 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
       </div>
       <div class="tier tier-gold featured-tier">
         <div class="tier-badge-top">BELIEBTESTE WAHL</div>
+        <div class="tier-limit">
+          <span class="tier-limit-bar"><span class="tier-limit-fill" style="width:80%"></span></span>
+          <span class="tier-limit-text urgent">⚡ Nur noch 8 Plätze frei!</span>
+        </div>
         <div class="tier-top">
           <span class="tier-icon">🌸</span>
           <h3 class="tier-name">Gold</h3>
@@ -667,6 +680,10 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
         <button class="btn btn-primary tier-btn" onclick="openMember('Gold')">Gold werden</button>
       </div>
       <div class="tier tier-platinum">
+        <div class="tier-limit">
+          <span class="tier-limit-bar"><span class="tier-limit-fill" style="width:90%"></span></span>
+          <span class="tier-limit-text urgent">🔥 Nur noch 3 Plätze!</span>
+        </div>
         <div class="tier-top">
           <span class="tier-icon">✨</span>
           <h3 class="tier-name">Platinum</h3>
@@ -693,11 +710,28 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
   <p class="section-tag">Le Club Privé</p>
   <h3 id="modal-title">Mitglied werden</h3>
   <p id="modal-desc" style="font-size:13px;color:var(--gray);line-height:1.8;margin:16px 0 28px"></p>
-  <form onsubmit="submitMember(event)">
-    <input class="newsletter-input" type="text" placeholder="Dein Name" required style="width:100%;margin-bottom:12px;border-right:1px solid var(--border-rose)"/>
-    <input class="newsletter-input" type="email" id="modal-email" placeholder="Deine E-Mail" required style="width:100%;margin-bottom:24px;border-right:1px solid var(--border-rose)"/>
-    <button class="btn btn-primary" style="width:100%;text-align:center" type="submit">Bestätigen & beitreten</button>
-  </form>
+  <div id="member-form-view">
+    <form onsubmit="submitMember(event)">
+      <input class="newsletter-input" type="text" id="modal-name" placeholder="Dein Vorname *" required style="width:100%;margin-bottom:12px;border-right:1px solid var(--border-rose)"/>
+      <input class="newsletter-input" type="email" id="modal-email" placeholder="Deine E-Mail *" required style="width:100%;margin-bottom:24px;border-right:1px solid var(--border-rose)"/>
+      <button class="btn btn-primary" style="width:100%;text-align:center" type="submit">Jetzt beitreten →</button>
+    </form>
+  </div>
+  <div id="member-success-view" style="display:none;text-align:center;padding:12px 0">
+    <div style="font-size:52px;margin-bottom:20px">🌸</div>
+    <h3 style="font-family:var(--serif);font-size:24px;color:var(--cream);margin-bottom:12px">Willkommen im Circle!</h3>
+    <p style="font-size:13px;color:var(--gray);line-height:1.9;margin-bottom:28px">Ein Willkommens-E-Mail mit deinem Bestätigungslink wurde an <strong id="member-confirm-email" style="color:var(--rose-light)"></strong> gesendet.</p>
+    <!-- Mini Email Preview -->
+    <div style="background:rgba(212,160,176,.06);border:1px solid var(--border-rose);padding:20px;text-align:left;margin-bottom:24px">
+      <p style="font-size:9px;letter-spacing:.2em;color:var(--rose);text-transform:uppercase;margin-bottom:12px">E-Mail Vorschau</p>
+      <p style="font-family:Georgia,serif;font-size:18px;color:var(--cream);margin:0 0 8px">Schön, dass du da bist, <span id="member-confirm-name" style="color:var(--rose-light);font-style:italic"></span> 🌸</p>
+      <p style="font-size:12px;color:var(--gray);line-height:1.7;margin:0 0 16px">Dein ÉLITE Circle Konto ist fast bereit. Klicke auf den Bestätigungslink in deiner E-Mail, um vollen Zugang zu erhalten.</p>
+      <div style="background:linear-gradient(135deg,rgba(212,160,176,.2),rgba(196,149,106,.15));padding:12px 20px;text-align:center">
+        <span style="font-size:11px;letter-spacing:.15em;color:var(--cream)">E-Mail bestätigen →</span>
+      </div>
+    </div>
+    <button class="btn btn-outline" style="width:100%;text-align:center" onclick="closeMemberModal()">Schliessen</button>
+  </div>
 </div>
 
 <!-- YOGA BOOKING MODAL -->
@@ -1392,14 +1426,28 @@ function openMember(tier){
   document.getElementById('member-modal-overlay').classList.add('open');
   document.getElementById('member-modal').classList.add('open');
 }
+function submitMember(e){
+  e.preventDefault();
+  const name  = document.getElementById('modal-name').value || 'Schöne';
+  const email = document.getElementById('modal-email').value;
+  // Show success view
+  document.getElementById('member-form-view').style.display='none';
+  document.getElementById('member-success-view').style.display='block';
+  document.getElementById('member-confirm-name').textContent = name;
+  document.getElementById('member-confirm-email').textContent = email;
+  showNotif('✦ Willkommen im ÉLITE Circle! 🌸');
+}
+
 function closeMemberModal(){
   document.getElementById('member-modal-overlay').classList.remove('open');
   document.getElementById('member-modal').classList.remove('open');
-}
-function submitMember(e){
-  e.preventDefault();
-  closeMemberModal();
-  showNotif('✦ Willkommen im ÉLITE Circle! 🌸');
+  // Reset form
+  setTimeout(()=>{
+    document.getElementById('member-form-view').style.display='block';
+    document.getElementById('member-success-view').style.display='none';
+    document.getElementById('modal-name').value='';
+    document.getElementById('modal-email').value='';
+  }, 400);
 }
 
 function toggleMenu(){
