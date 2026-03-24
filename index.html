@@ -142,6 +142,13 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
 .footer-col a:hover{color:var(--gold)}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:36px;font-size:11px;color:rgba(136,136,136,.5);letter-spacing:.1em}
 
+/* LANGUAGE SWITCHER */
+.lang-switch{position:fixed;bottom:32px;right:32px;z-index:150;display:flex;align-items:center;gap:8px;background:rgba(17,17,17,.95);border:1px solid var(--border);padding:10px 18px;backdrop-filter:blur(8px)}
+.lang-btn{background:none;border:none;color:var(--gray);font-family:var(--sans);font-size:11px;letter-spacing:.2em;cursor:pointer;transition:.3s;padding:0}
+.lang-btn:hover{color:var(--gold)}
+.lang-btn.active{color:var(--gold);font-weight:500}
+.lang-sep{color:var(--border);font-size:12px}
+
 /* NOTIFICATION */
 .notif{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--deep);border:1px solid var(--gold);color:var(--cream);padding:16px 32px;font-size:12px;letter-spacing:.1em;z-index:300;transition:transform .4s cubic-bezier(.4,0,.2,1);white-space:nowrap}
 .notif.show{transform:translateX(-50%) translateY(0)}
@@ -318,6 +325,13 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
   </div>
 </div>
 
+<!-- LANGUAGE SWITCHER -->
+<div class="lang-switch" id="lang-switch">
+  <button onclick="setLang('de')" id="lang-de" class="lang-btn active">DE</button>
+  <span class="lang-sep">|</span>
+  <button onclick="setLang('pt')" id="lang-pt" class="lang-btn">PT</button>
+</div>
+
 <!-- NOTIFICATION -->
 <div class="notif" id="notif"></div>
 
@@ -357,6 +371,174 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
 </footer>
 
 <script>
+// ── TRANSLATIONS ──
+const translations={
+  de:{
+    nav_collection:"Collection",nav_bundles:"Bundles",nav_maison:"Maison",
+    nav_bag:"Tasche",
+    hero_eyebrow:"Engineered in Switzerland",
+    hero_h1_1:"Kraft für dein",hero_h1_em:"Bestes Ich",
+    hero_sub:"Premium-Ernährung für die Frau, die keine Kompromisse macht. Wissenschaftlich fundiert. Luxuriös gefertigt.",
+    btn_shop:"Zur Kollektion",btn_bundles:"Bundles entdecken",
+    scroll:"SCROLLEN",
+    numbers:["Jahre Exzellenz","Swiss Engineered","Kompromisse"],
+    section_tag_collection:"La Collection",section_title_collection:"Maison Essentials",
+    section_tag_bundle:"Édition Exclusive",
+    bundle_h2_1:"Die Morgen",bundle_h2_em:"Ritual Box",
+    bundle_desc:"Drei unserer feinsten Formulierungen, kuratiert für die anspruchsvolle Frau. Beginne jeden Morgen mit Klarheit, Vitalität und Intention.",
+    bundle_items:["Clear Iso Whey — Peach Passion Fruit","Matcha Latte Whey","Vegan Omega 3 Sport"],
+    bundle_btn:"Bundle in die Tasche",bundle_save:"15% SPAREN",
+    phil_tag:"Notre Philosophie",
+    phil_quote:'"Dein Körper verdient die gleichen Ansprüche wie dein Lifestyle."',
+    phil_source:"— ÉLITE FUEL, Maison Zürich",
+    news_tag:"Rejoignez la Maison",news_h3:"Der Inner Circle",
+    news_sub:"Exklusiver Zugang zu Neuheiten, privaten Events und Mitglieder-Angeboten.",
+    news_placeholder:"Deine E-Mail-Adresse",news_btn:"Beitreten",
+    cart_title:"Deine Tasche",cart_empty:"Deine Tasche ist leer.\nEntdecke die Kollektion oben.",
+    cart_checkout:"Zur Kasse",
+    footer_desc:"Premium-Ernährung für die moderne Frau. Engineered in Switzerland, mit Sorgfalt geliefert.",
+    footer_h_collection:"Kollektion",footer_links_collection:["Whey Proteine","Vegane Linie","Vitamine","Bundles"],
+    footer_h_maison:"Maison",footer_links_maison:["Unsere Geschichte","Zutaten","Nachhaltigkeit","Presse"],
+    footer_h_service:"Service",footer_links_service:["Versand","Rückgabe","FAQ","Kontakt"],
+    footer_copy:"© 2026 ÉLITE FUEL. Alle Rechte vorbehalten.",
+    footer_legal:"Datenschutz · AGB · Cookie-Einstellungen",
+    notif_added:"zur Tasche hinzugefügt",notif_welcome:"Willkommen im Inner Circle",
+    product_tags:["BESTSELLER","MAISON FAVORIT","SONDERAUSGABE","MAISON KLASSIKER","CLEAN FORMULA","TÄGLICHES RITUAL"],
+    product_descs:[
+      "Kompromisslose Reinheit. 25g Protein pro Portion, für höchste Ansprüche.",
+      "Erfrischend wie ein feiner Champagner, wirkungsvoll wie Schweizer Präzision.",
+      "Wo uraltes Ritual auf moderne Wissenschaft trifft. Ceremonial Matcha, kein Zucker.",
+      "80mg Arabica-Koffein. 21g Protein. Das Morgenritual der aussergewöhnlichen Frau.",
+      "Ethisch gewonnen aus Mikroalgen. Pur. Vegan. Das unsichtbare Fundament der Ausstrahlung.",
+      "Das Sonnenlicht, das du in dir trägst. Optimale Immunität und Knochengesundheit, perfektioniert."
+    ]
+  },
+  pt:{
+    nav_collection:"Colecção",nav_bundles:"Bundles",nav_maison:"Maison",
+    nav_bag:"Saco",
+    hero_eyebrow:"Desenvolvido na Suíça",
+    hero_h1_1:"Combustível para o teu",hero_h1_em:"Melhor Eu",
+    hero_sub:"Nutrição premium para a mulher que não aceita compromissos. Baseada em ciência. Com toque de luxo.",
+    btn_shop:"Ver Colecção",btn_bundles:"Descobrir Bundles",
+    scroll:"ROLAR",
+    numbers:["Anos de Excelência","Swiss Engineered","Compromissos"],
+    section_tag_collection:"La Collection",section_title_collection:"Maison Essentials",
+    section_tag_bundle:"Édition Exclusive",
+    bundle_h2_1:"A Caixa do",bundle_h2_em:"Ritual Matinal",
+    bundle_desc:"Três das nossas melhores formulações, curadas para a mulher exigente. Começa cada manhã com clareza, vitalidade e intenção.",
+    bundle_items:["Clear Iso Whey — Pêssego Maracujá","Matcha Latte Whey","Vegan Omega 3 Sport"],
+    bundle_btn:"Adicionar Bundle ao Saco",bundle_save:"POUPA 15%",
+    phil_tag:"Notre Philosophie",
+    phil_quote:'"O teu corpo merece os mesmos padrões que o teu estilo de vida."',
+    phil_source:"— ÉLITE FUEL, Maison Zurique",
+    news_tag:"Rejoignez la Maison",news_h3:"O Círculo Interno",
+    news_sub:"Acesso exclusivo a novidades, eventos privados e ofertas para membros.",
+    news_placeholder:"O teu endereço de email",news_btn:"Aderir",
+    cart_title:"O Teu Saco",cart_empty:"O teu saco está vazio.\nExplora a colecção acima.",
+    cart_checkout:"Finalizar Compra",
+    footer_desc:"Nutrição premium para a mulher moderna. Desenvolvida na Suíça, entregue com cuidado.",
+    footer_h_collection:"Colecção",footer_links_collection:["Proteínas Whey","Linha Vegan","Vitaminas","Bundles"],
+    footer_h_maison:"Maison",footer_links_maison:["A Nossa História","Ingredientes","Sustentabilidade","Imprensa"],
+    footer_h_service:"Serviço",footer_links_service:["Envio","Devoluções","FAQ","Contacto"],
+    footer_copy:"© 2026 ÉLITE FUEL. Todos os direitos reservados.",
+    footer_legal:"Privacidade · Termos · Definições de Cookies",
+    notif_added:"adicionado ao saco",notif_welcome:"Bem-vindo ao Círculo Interno",
+    product_tags:["MAIS VENDIDO","FAVORITO MAISON","EDIÇÃO ESPECIAL","CLÁSSICO MAISON","FÓRMULA CLEAN","RITUAL DIÁRIO"],
+    product_descs:[
+      "Pureza sem compromisso. 25g de proteína por dose, para quem exige o melhor.",
+      "Refrescante como champanhe fino, eficaz como precisão suíça.",
+      "Onde o ritual ancestral encontra a ciência moderna. Matcha ceremonial, zero açúcar.",
+      "80mg de cafeína arábica. 21g de proteína. O ritual matinal da mulher extraordinária.",
+      "Obtido eticamente a partir de microalgas. Puro. Vegan. O fundamento invisível da radiância.",
+      "A luz do sol que carregas contigo. Imunidade e saúde óssea, perfeiçoadas."
+    ]
+  }
+};
+
+let currentLang='de';
+
+function setLang(lang){
+  currentLang=lang;
+  document.getElementById('lang-de').classList.toggle('active',lang==='de');
+  document.getElementById('lang-pt').classList.toggle('active',lang==='pt');
+  const t=translations[lang];
+
+  // Nav
+  document.querySelectorAll('.nav-links a')[0].textContent=t.nav_collection;
+  document.querySelectorAll('.nav-links a')[1].textContent=t.nav_bundles;
+  document.querySelectorAll('.nav-links a')[2].textContent=t.nav_maison;
+
+  // Hero
+  document.querySelector('.hero-eyebrow').innerHTML=t.hero_eyebrow;
+  document.querySelector('h1').innerHTML=t.hero_h1_1+'<br/><em>'+t.hero_h1_em+'</em>';
+  document.querySelector('.hero-sub').textContent=t.hero_sub;
+  document.querySelectorAll('.hero-actions .btn')[0].textContent=t.btn_shop;
+  document.querySelectorAll('.hero-actions .btn')[1].textContent=t.btn_bundles;
+  document.querySelector('.scroll-hint span').textContent=t.scroll;
+
+  // Numbers
+  document.querySelectorAll('.about-label').forEach((el,i)=>el.textContent=t.numbers[i]);
+
+  // Collection
+  document.querySelectorAll('.section-tag')[0].textContent=t.section_tag_collection;
+  document.querySelectorAll('.section-intro h2')[0].textContent=t.section_title_collection;
+
+  // Bundle
+  document.querySelectorAll('.section-tag')[1].textContent=t.section_tag_bundle;
+  document.querySelector('.bundle-text h2').innerHTML=t.bundle_h2_1+'<br/><em>'+t.bundle_h2_em+'</em>';
+  document.querySelector('.bundle-text > p').textContent=t.bundle_desc;
+  document.querySelectorAll('.bundle-item-name').forEach((el,i)=>el.textContent=t.bundle_items[i]);
+  document.querySelector('.bundle-save').textContent=t.bundle_save;
+  document.querySelector('.bundle-text .btn').textContent=t.bundle_btn;
+
+  // Philosophy
+  document.querySelectorAll('.section-tag')[2].textContent=t.phil_tag;
+  document.querySelector('.quote').textContent=t.phil_quote;
+  document.querySelector('.quote-source').textContent=t.phil_source;
+
+  // Newsletter
+  document.querySelectorAll('.section-tag')[3].textContent=t.news_tag;
+  document.querySelector('.newsletter h3').textContent=t.news_h3;
+  document.querySelector('.newsletter p').innerHTML=t.news_sub;
+  document.querySelector('.newsletter-input').placeholder=t.news_placeholder;
+  document.querySelector('.newsletter-btn').textContent=t.news_btn;
+
+  // Cart
+  document.querySelector('.cart-head span').textContent=t.cart_title;
+  document.querySelector('.cart-empty').textContent=t.cart_empty;
+  document.querySelector('.cart-foot .btn').textContent=t.cart_checkout;
+
+  // Footer
+  document.querySelector('.footer-brand p').textContent=t.footer_desc;
+  document.querySelectorAll('.footer-col h4')[0].textContent=t.footer_h_collection;
+  document.querySelectorAll('.footer-col h4')[1].textContent=t.footer_h_maison;
+  document.querySelectorAll('.footer-col h4')[2].textContent=t.footer_h_service;
+  document.querySelectorAll('.footer-col:nth-child(2) a').forEach((el,i)=>el.textContent=t.footer_links_collection[i]);
+  document.querySelectorAll('.footer-col:nth-child(3) a').forEach((el,i)=>el.textContent=t.footer_links_maison[i]);
+  document.querySelectorAll('.footer-col:nth-child(4) a').forEach((el,i)=>el.textContent=t.footer_links_service[i]);
+  document.querySelectorAll('.footer-bottom span')[0].textContent=t.footer_copy;
+  document.querySelectorAll('.footer-bottom span')[1].textContent=t.footer_legal;
+
+  // Products
+  rerenderProducts();
+}
+
+function rerenderProducts(){
+  const t=translations[currentLang];
+  document.getElementById('grid').innerHTML=products.map((p,i)=>`
+    <div class="product">
+      <span class="product-tag">${t.product_tags[i]}</span>
+      <span class="product-emoji">${p.icon}</span>
+      <h3 class="product-name">${p.name}</h3>
+      <p class="product-type">${p.sub}</p>
+      <p class="product-text">${t.product_descs[i]}</p>
+      <div class="product-bottom">
+        <span class="product-price">CHF ${p.price.toFixed(2)}</span>
+        <button class="add-btn" onclick="addToCart(${p.id})">+</button>
+      </div>
+    </div>`).join('');
+}
+
 const products=[
   {id:1,name:"Boom Whey",sub:"Premium Whey Protein",tag:"BESTSELLER",icon:"🥛",desc:"Uncompromising purity. 25g protein per serving, crafted for those who demand excellence in every sip.",price:28.90},
   {id:2,name:"Clear Iso Whey",sub:"Crystal Clear Protein",tag:"MAISON FAVOURITE",icon:"🍑",desc:"Refreshing as a fine champagne, potent as Swiss precision. A revelation in modern nutrition.",price:39.90},
@@ -367,7 +549,7 @@ const products=[
 ];
 let cart=[];
 
-// Render grid
+// Render grid (initial, gets replaced by setLang)
 document.getElementById('grid').innerHTML=products.map(p=>`
   <div class="product">
     <span class="product-tag">${p.tag}</span>
@@ -386,7 +568,7 @@ function addToCart(id){
   const e=cart.find(x=>x.id===id);
   if(e)e.qty++;else cart.push({...p,qty:1});
   updateCart();openCart();
-  showNotif(`${p.name} added to bag`);
+  showNotif(`${p.name} ${translations[currentLang].notif_added}`);
 }
 function addBundle(){[2,3,5].forEach(id=>addToCart(id))}
 function removeFromCart(id){cart=cart.filter(x=>x.id!==id);updateCart();if(!cart.length)closeCart()}
@@ -427,9 +609,13 @@ function showNotif(msg){
 
 function subscribeNewsletter(e){
   e.preventDefault();
-  showNotif('Welcome to the Inner Circle');
+  const t=translations[currentLang];
+  showNotif(t.notif_welcome);
   e.target.reset();
 }
+
+// Init with German
+setLang('de');
 </script>
 </body>
 </html>
