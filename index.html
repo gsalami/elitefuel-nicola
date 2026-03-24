@@ -289,6 +289,19 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
 .pay-option input{accent-color:var(--rose)}
 .pay-label{font-size:13px;color:var(--cream);letter-spacing:.06em}
 
+/* BLOG READER */
+.blog-hero-img{width:calc(100% + 104px);margin:-52px -52px 36px;height:260px;object-fit:cover;filter:brightness(.7);display:block}
+.blog-article-tag{font-size:9px;letter-spacing:.25em;color:var(--rose);text-transform:uppercase;border:1px solid var(--border-rose);padding:4px 12px;display:inline-block;margin-bottom:20px}
+.blog-article-title{font-family:var(--serif);font-size:clamp(26px,5vw,38px);font-weight:300;color:var(--cream);line-height:1.2;margin-bottom:20px}
+.blog-article-meta{font-size:10px;letter-spacing:.15em;color:var(--gray);margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--border-rose)}
+.blog-article-body{font-size:14px;line-height:2;color:#c8b8b8}
+.blog-article-body h4{font-family:var(--serif);font-size:22px;color:var(--cream);margin:36px 0 16px;font-weight:300}
+.blog-article-body p{margin-bottom:20px}
+.blog-article-body strong{color:var(--rose-light);font-weight:400}
+.blog-article-body ul{margin:0 0 20px 20px}
+.blog-article-body ul li{margin-bottom:8px}
+.blog-article-quote{border-left:2px solid var(--rose);padding-left:24px;margin:32px 0;font-family:var(--serif);font-size:18px;font-style:italic;color:var(--cream);line-height:1.6}
+
 /* CHATBOT */
 .chatbot-btn{position:fixed;bottom:90px;right:28px;z-index:150;background:linear-gradient(135deg,var(--rose),var(--gold));border:none;border-radius:50px;padding:14px 20px;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 8px 32px rgba(212,160,176,.3);transition:all .3s}
 .chatbot-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(212,160,176,.4)}
@@ -838,38 +851,38 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
       <h2>Wellness Stories</h2>
     </div>
     <div class="blog-grid">
-      <article class="blog-card blog-card-featured">
+      <article class="blog-card blog-card-featured" onclick="openBlog(0)">
         <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900&q=80&fit=crop" alt="Nutrition" loading="lazy"/>
         <div class="blog-card-body">
           <span class="blog-tag">Ernährung</span>
           <h3>Morgenritual: Wie du deinen Tag mit Intention beginnst</h3>
           <p>Erfahre, wie drei einfache Gewohnheiten — Protein, Bewegung und Stille — deine Energie für den ganzen Tag transformieren.</p>
-          <a href="#" class="blog-read">Lesen →</a>
+          <span class="blog-read">Lesen →</span>
         </div>
       </article>
       <div class="blog-side">
-        <article class="blog-card-small">
+        <article class="blog-card-small" onclick="openBlog(1)">
           <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&q=80&fit=crop" alt="Yoga"/>
           <div class="blog-card-small-body">
             <span class="blog-tag">Yoga</span>
             <h4>Yin Yoga: Die Kraft der Stille</h4>
-            <a href="#" class="blog-read">Lesen →</a>
+            <span class="blog-read">Lesen →</span>
           </div>
         </article>
-        <article class="blog-card-small">
+        <article class="blog-card-small" onclick="openBlog(2)">
           <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80&fit=crop" alt="Clean eating"/>
           <div class="blog-card-small-body">
             <span class="blog-tag">Clean Eating</span>
             <h4>Warum Proteinqualität wichtiger ist als Menge</h4>
-            <a href="#" class="blog-read">Lesen →</a>
+            <span class="blog-read">Lesen →</span>
           </div>
         </article>
-        <article class="blog-card-small">
+        <article class="blog-card-small" onclick="openBlog(3)">
           <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80&fit=crop" alt="Wellness"/>
           <div class="blog-card-small-body">
             <span class="blog-tag">Wellness</span>
             <h4>Omega 3: Das stille Wunder für Haut und Geist</h4>
-            <a href="#" class="blog-read">Lesen →</a>
+            <span class="blog-read">Lesen →</span>
           </div>
         </article>
       </div>
@@ -1045,6 +1058,12 @@ footer{padding:100px 60px 60px;border-top:1px solid var(--border);background:var
 
 <!-- NOTIFICATION -->
 <div class="notif" id="notif"></div>
+
+<!-- BLOG READER MODAL -->
+<div class="modal" id="blog-modal" style="width:640px;max-height:85vh;overflow-y:auto">
+  <button class="modal-close" onclick="closeBlog()">✕</button>
+  <div id="blog-modal-content"></div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -1514,6 +1533,144 @@ function subscribeNewsletter(e){
   const t=translations[currentLang];
   showNotif(t.notif_welcome);
   e.target.reset();
+}
+
+// ── BLOG ──
+const blogPosts = [
+  {
+    tag: 'Ernährung',
+    title: 'Morgenritual: Wie du deinen Tag mit Intention beginnst',
+    meta: 'Von Nina · 18. März 2026 · 5 Min. Lesezeit',
+    img: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900&q=80&fit=crop',
+    content: `
+      <p>Der Morgen ist heilig. Er ist das erste Kapitel eines jeden Tages — und wie du ihn beginnst, bestimmt wie der Rest sich entfaltet. Bei ÉLITE FUEL glauben wir: <strong>Ernährung ist kein Pflichtprogramm, sondern ein Liebesakt an deinen Körper.</strong></p>
+
+      <h4>1. Hydration first — noch vor dem Kaffee</h4>
+      <p>Dein Körper hat die Nacht über gefastet. Das Erste, was er braucht, ist kein Koffein, sondern Wasser. Trink ein Glas lauwarmes Wasser, idealerweise mit einer Scheibe Zitrone. Das aktiviert deinen Stoffwechsel und weckt die Verdauung sanft auf.</p>
+
+      <div class="blog-article-quote">"Ein guter Morgen beginnt nicht mit dem Wecker, sondern mit dem ersten bewussten Atemzug."</div>
+
+      <h4>2. Protein innerhalb der ersten 30 Minuten</h4>
+      <p>Studien zeigen: Wer morgens Protein zu sich nimmt, hat weniger Heisshunger über den Tag. Unser <strong>Matcha Latte Whey</strong> ist dafür perfekt — 25g Protein, ceremonial grade Matcha, kein Zuckerzusatz. Einfach mit 200ml kalter Mandelmilch shaken.</p>
+      <ul>
+        <li>Stabilisiert den Blutzucker</li>
+        <li>Unterstützt den Muskelerhalt</li>
+        <li>Hält bis zum Mittagessen satt</li>
+      </ul>
+
+      <h4>3. Fünf Minuten Stille</h4>
+      <p>Bevor du das Handy checkst, gönn dir fünf Minuten ohne Input. Setze dich ans Fenster, halte deine Tasse und atme. Kein Podcast, keine Nachrichten. Nur du und der Morgen. Diese kleine Gewohnheit hat eine erstaunliche Wirkung auf deine mentale Klarheit — und das sagen nicht wir, das sagt die Neurowissenschaft.</p>
+
+      <h4>4. Bewegung — auch kurz zählt</h4>
+      <p>Du musst nicht um 6 Uhr eine Stunde Sport machen. Zehn Minuten sanftes Stretching, eine kurze Atemübung oder unser <strong>Morning Flow Yoga</strong> reichen, um deinen Körper zu aktivieren. Bewegung am Morgen setzt Endorphine frei und verbessert deine Konzentration für Stunden.</p>
+
+      <p>Das Morgenritual braucht keine Stunde. Es braucht Absicht. Fange mit einer einzigen Veränderung an — und beobachte, wie sich dein ganzer Tag verschiebt. 🌸</p>
+    `
+  },
+  {
+    tag: 'Yoga',
+    title: 'Yin Yoga: Die Kraft der Stille und warum du sie brauchst',
+    meta: 'Von Nina · 12. März 2026 · 4 Min. Lesezeit',
+    img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=900&q=80&fit=crop',
+    content: `
+      <p>In einer Welt, die uns ständig zu mehr Schnelligkeit, mehr Output und mehr Performance drängt, ist Yin Yoga ein radikaler Akt der Selbstfürsorge. <strong>Langsam sein ist keine Schwäche — es ist eine Kunst.</strong></p>
+
+      <h4>Was ist Yin Yoga überhaupt?</h4>
+      <p>Anders als beim dynamischen Vinyasa oder Power Yoga geht es beim Yin nicht um Kraft und Bewegung, sondern um Tiefe und Zeit. Du hältst Positionen zwischen drei und fünf Minuten, lässt die Schwerkraft arbeiten und gibst deinem Bindegewebe — den Faszien, Sehnen und Bändern — die Aufmerksamkeit, die sie so selten bekommen.</p>
+
+      <div class="blog-article-quote">"Yin Yoga lehrt uns, mit Unbehagen zu sitzen, ohne davonzulaufen. Eine Fähigkeit, die weit über die Matte hinausgeht."</div>
+
+      <h4>Die überraschenden Vorteile</h4>
+      <ul>
+        <li><strong>Tiefe Flexibilität:</strong> Faszien brauchen lange, sanfte Dehnung — nicht kurze, intensive</li>
+        <li><strong>Stressabbau:</strong> Das parasympathische Nervensystem wird aktiviert — der "Rest & Digest"-Modus</li>
+        <li><strong>Besserer Schlaf:</strong> Regelmässige Yin-Praxis verbessert die Schlafqualität nachweislich</li>
+        <li><strong>Emotionale Verarbeitung:</strong> Im Bindegewebe speichern wir Emotionen — Yin kann helfen, sie zu lösen</li>
+      </ul>
+
+      <h4>Für wen ist Yin geeignet?</h4>
+      <p>Für alle. Aber besonders für Frauen, die viel geben — im Beruf, in der Familie, für andere. Yin Yoga ist die Erlaubnis, einmal nichts zu leisten. Einfach zu sein. Unser <strong>Yin & Restore</strong> Kurs im ÉLITE FUEL Studio findet mittwochs statt und ist bewusst auf maximal 8 Teilnehmerinnen begrenzt — weil echte Stille Raum braucht.</p>
+
+      <p>Komm einfach vorbei. Matte und Decke stellen wir. Du musst nur ankommen. 🌿</p>
+    `
+  },
+  {
+    tag: 'Clean Eating',
+    title: 'Warum Proteinqualität wichtiger ist als die Menge',
+    meta: 'Von Nina · 5. März 2026 · 6 Min. Lesezeit',
+    img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=80&fit=crop',
+    content: `
+      <p>Überall liest man: "Iss mehr Protein!" Aber kaum jemand spricht darüber, <strong>welches</strong> Protein. Dabei ist das der entscheidende Unterschied — zwischen einem Körper, der sich gut fühlt, und einem, der wirklich strahlt.</p>
+
+      <h4>Die Qualitätsfrage: Was macht gutes Protein aus?</h4>
+      <p>Protein ist nicht gleich Protein. Entscheidend ist die <strong>Bioverfügbarkeit</strong> — also wie viel der Körper tatsächlich aufnehmen und verwerten kann. Tierisches Protein hat generell eine höhere Bioverfügbarkeit als pflanzliches, aber auch hier gibt es grosse Unterschiede.</p>
+
+      <ul>
+        <li><strong>Whey Isolat</strong> (wie unser Clear Iso Whey): höchste Bioverfügbarkeit, schnelle Aufnahme, ideal nach dem Training</li>
+        <li><strong>Casein:</strong> langsame Aufnahme, ideal am Abend</li>
+        <li><strong>Pea + Rice Protein:</strong> Pflanzliche Kombi mit vollständigem Aminosäureprofil</li>
+      </ul>
+
+      <div class="blog-article-quote">"Qualitätsprotein ist kein Luxus. Es ist die Grundlage von Energie, Haut, Haaren und hormoneller Balance."</div>
+
+      <h4>Wie viel Protein brauchst du wirklich?</h4>
+      <p>Die allgemeine Empfehlung liegt bei 0.8g pro Kilogramm Körpergewicht — aber für aktive Frauen, die Muskeln erhalten oder aufbauen wollen, sind 1.4 bis 1.8g deutlich sinnvoller. Bei 60kg also zwischen 84 und 108g täglich.</p>
+
+      <h4>Die Qualitätsfallen im Alltag</h4>
+      <p>Viele günstige Proteinpulver setzen auf <strong>billige Aminosäuren</strong> (wie Taurin oder Glycin), um den Proteingehalt auf dem Label künstlich zu erhöhen — ein Trick, der als "Amino Spiking" bekannt ist. Achte auf transparente Zutatenlisten. Bei ÉLITE FUEL verwenden wir ausschliesslich Produkte, die diesem Test standhalten.</p>
+
+      <p>Dein Körper verdient das Beste. Nicht das Günstigste — das Richtige. 🌸</p>
+    `
+  },
+  {
+    tag: 'Wellness',
+    title: 'Omega 3: Das stille Wunder für Haut, Geist und Hormone',
+    meta: 'Von Nina · 28. Februar 2026 · 5 Min. Lesezeit',
+    img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=900&q=80&fit=crop',
+    content: `
+      <p>Wenn du nur ein einziges Supplement nehmen könntest — es wäre Omega 3. Kaum ein anderer Nährstoff hat eine so breite, wissenschaftlich belegte Wirkung auf Körper und Geist. Und trotzdem ist er bei den meisten Frauen chronisch unterversorgt.</p>
+
+      <h4>Was Omega 3 tatsächlich tut</h4>
+      <p>Die langkettigen Fettsäuren EPA und DHA — die biologisch aktiven Formen von Omega 3 — sind an einer verblüffenden Anzahl von Körperprozessen beteiligt:</p>
+      <ul>
+        <li><strong>Haut:</strong> Verbessert Feuchtigkeit, Elastizität und reduziert Entzündungen (Akne, Rötungen)</li>
+        <li><strong>Gehirn:</strong> DHA ist ein Hauptbestandteil des Hirngewebes — essentiell für Konzentration und Stimmung</li>
+        <li><strong>Hormone:</strong> Omega 3 unterstützt die Produktion von Hormonen und kann PMS-Symptome lindern</li>
+        <li><strong>Herz:</strong> Senkt Triglyceride und wirkt entzündungshemmend</li>
+      </ul>
+
+      <div class="blog-article-quote">"Die Haut ist ein Spiegel des Inneren. Wer Omega 3 als Luxus betrachtet, denkt zu klein."</div>
+
+      <h4>Fisch oder Algen — was ist besser?</h4>
+      <p>Klassisches Fischöl enthält EPA und DHA — aber auch Schwermetalle, wenn es schlecht gefiltert ist. Unser <strong>Vegan Omega 3 Sport</strong> gewinnt die Fettsäuren direkt aus Mikroalgen — der Quelle, aus der die Fische sie ursprünglich bekommen. Sauber, vegan, und ohne Meeresgeschmack.</p>
+
+      <h4>Wie und wann einnehmen?</h4>
+      <p>Omega 3 ist fettlöslich — immer mit einer Mahlzeit nehmen, die etwas Fett enthält. Morgens zum Frühstück ist ideal. Die Wirkung ist kumulativ: Du wirst sie nicht nach drei Tagen spüren, aber nach vier bis sechs Wochen regelmässiger Einnahme wirst du den Unterschied sehen — buchstäblich, in deiner Haut. 🌿</p>
+    `
+  }
+];
+
+function openBlog(index){
+  const post = blogPosts[index];
+  document.getElementById('blog-modal-content').innerHTML = `
+    <img class="blog-hero-img" src="${post.img}" alt="${post.title}"/>
+    <span class="blog-article-tag">${post.tag}</span>
+    <h2 class="blog-article-title">${post.title}</h2>
+    <p class="blog-article-meta">${post.meta}</p>
+    <div class="blog-article-body">${post.content}</div>
+    <div style="border-top:1px solid var(--border-rose);padding-top:28px;margin-top:36px;text-align:center">
+      <p style="font-size:11px;letter-spacing:.15em;color:var(--gray);margin-bottom:20px">Hat dir dieser Artikel gefallen?</p>
+      <button class="btn btn-primary" onclick="openMember('Silver')" style="margin-right:12px">Inner Circle beitreten</button>
+    </div>
+  `;
+  document.getElementById('member-modal-overlay').classList.add('open');
+  document.getElementById('blog-modal').classList.add('open');
+  document.getElementById('blog-modal').scrollTop=0;
+}
+
+function closeBlog(){
+  document.getElementById('member-modal-overlay').classList.remove('open');
+  document.getElementById('blog-modal').classList.remove('open');
 }
 
 // Init with German
